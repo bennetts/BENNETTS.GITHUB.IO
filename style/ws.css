@@ -5,6 +5,7 @@
 	top:50px;
 	z-index:2;
 	border-radius:20px;
+	border-bottom-right-radius: 0px;
 	background-color:#0606EC;
 	zoom: 1;
 	filter: alpha(opacity=85);
@@ -19,6 +20,15 @@
 	z-index:-1;
 }
 
+#wsright {
+	position: absolute;
+	width: 15px;
+	height:70%;
+	background-color:#0606EC;
+	top:200px;
+	left:485px;
+}
+
 .wsh1 {
   color:#000000;
   font-size:25px;
@@ -31,7 +41,7 @@
 
 #wsinav {
   margin-top:50px;
-  
+
 }
 
 .wsbtn {
