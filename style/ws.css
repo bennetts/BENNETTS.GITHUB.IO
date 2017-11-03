@@ -1,34 +1,14 @@
 #wsnav {
 	position:absolute;
-	width:800px;
+	width:500px;
 	height:100px;
 	top:50px;
 	z-index:2;
 	border-radius:20px;
-	background-color:#FFFFFF;
+	background-color:#0606EC;
 	zoom: 1;
-	filter: alpha(opacity=65);
+	filter: alpha(opacity=85);
 	opacity: 0.65;
-}
-
-#wsfoot {
-  position:absolute;
-  width:100%;
-  height:150px;
-  z-index:3;
-  background-color:#fff;
-}
-
-#wsffoot {
-  position:absolute;
-  width:100%;
-  height:130px;
-  background-color:#fff;
-  z-index:-1;
-}
-
-#wslogo {
-  float:right;
 }
 
 #wsfbody {
@@ -42,7 +22,7 @@
 .wsh1 {
   color:#000000;
   font-size:25px;
-  border-top:35px;
+  border-top:0px;
 }
 
 .wsimg {

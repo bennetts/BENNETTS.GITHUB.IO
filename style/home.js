@@ -29,31 +29,34 @@ function windowChange() {
 	$("#wsfoot").css({top:measure});
 	$("#wsffoot").css({top:measure});
 	
-	measure = ((pagewidth-800)/2);
-	$("#wsfbody").css({left:measure});
+	measure = ((pagewidth-500)/2);
+	$("#wsfbody").css({left:measure})
+
+    measure -=175;
+    $("#blogo").css({left:measure});
 	
 	measure = $("#wsnav").height()+50;
+    $("#blogo").css({top:measure-50});
 	$("#wsselb").css({top:measure});
 	
-	measure = ((pagewidth-800)/2)+$("#wsnvspn").width()+74;
+	measure = ((pagewidth-400)/2)+$("#wsnvspn").width()+24;
 	
 	/*   NAV STUFF TO BE CONTINUED  */
-	nbxr = (((pagewidth-800)/2)+683);
-	nbxl = measure;
+    nbxl = measure;
+	nbxr = (((pagewidth-400)/2)+384);
 	
 	
 	$("#wsselb").css({left:measure});
-	$("#wsselt").css({left:measure});
 	
 	// Position the Nav bar correctly
 	measure = $("#wsfoot").height();
-	tmeas = ((pageheight-measure)/2);
-	measure = (tmeas-($("#wsnav").height()/2));
-	$("#wsnav").css({top:measure});
+	tmeas = 100;
+	measure = (tmeas-($("#wsnav").height()/2)+50);
+	$("#wsnav").css({top:100});
 	tmeas = measure-10;
-	$("#wsselt").css({top:tmeas});
 	measure = tmeas+$("#wsnav").height()+10;
 	$("#wsselb").css({top:measure});
+
 	
 };
 
@@ -62,7 +65,8 @@ $(document).ready(function()
   $(document).mousemove(function(e)
   {
       measure = e.pageX;
-      if(measure>nbxl && measure<nbxr)
+      tmeas = e.pageY;
+      if(measure>nbxl && measure<nbxr && tmeas<200 && tmeas>100)
       {
         if(nbon==1){
           
@@ -74,8 +78,7 @@ $(document).ready(function()
         nmodn = Math.floor(tmeas/96);
         measure=(tmeas-(tmeas%96))+nbxl;
         if(nmodn!=nmod){
-          $("#wsselb").stop().animate({left:measure},250,function(){});
-          $("#wsselt").stop().animate({left:measure},250,function(){});
+          $("#wsselb").stop().animate({left:measure},0,function(){});
           
           /**Link target change and image change for icons background**/
           
@@ -111,8 +114,7 @@ $(document).ready(function()
           }
         }noob = 1;
       } else if(noob){
-          $("#wsselb").stop().animate({left:nbxl},500,function(){});
-          $("#wsselt").stop().animate({left:nbxl},500,function(){});
+          $("#wsselb").stop().animate({left:nbxl},0,function(){});
           $("#wsbhome").css({backgroundPosition:'0px -32px'});nbscur=0;
           $("#wsbwad").css({backgroundPosition:'-64px -32px'});
           $("#wsbghub").css({backgroundPosition:'-64px -32px'});

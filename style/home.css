@@ -4,7 +4,7 @@
 
 body {
 	font: 18px/1.5 "myriad-pro-1", "myriad-pro-2", HelveticaNeue, Helvetica, Arial, serif;
-	background: #FFFFFF;
+	background: #000000;
 	overflow:hidden;
 }
 
@@ -22,6 +22,10 @@ ul li {
 	height:40px;	
 	color:#FFFFFF;
 	line-height:35px;
+}
+
+#blogo {
+    position:absolute;
 }
 
 #rule {
@@ -54,7 +58,6 @@ ul li {
 
 
 .inbg {
-	background:url(../img/bg.jpg);
 	background-repeat:repeat;
 	position:absolute;
 	z-index:-2;
