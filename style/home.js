@@ -10,7 +10,6 @@ var nbxr = 0;
 var nbsl = 0;
 var nbsr = 0;
 
-var nbon = 1;
 var nbcur= 0;
 
 var navtotallinks = 2;
@@ -19,110 +18,108 @@ var nmod = 0;
 var nmodn = 0;
 
 var noob = 1; /* nav out of bounds */
+
+var nselect = 0;
+var nmeas;
+
+
+function button(name, index) {
+	  this.name = name;
+		this.index = index;
+	  this.draw = function(hpos) {
+			if(index==hpos){
+			$(this.name).css({backgroundPosition:'0px -32px'});nbscur=0;
+			} else {
+				$(this.name).css({backgroundPosition:'-64px -32px'});
+			}
+  };
+};
+
+var bhome = new button("#wsbhome", 0);
+var bimg = new button("#wsbwad", 1);
+var bhub = new button("#wsbghub", 2);
+
 /*88888888888888888888888888888*/
 
 function windowChange() {
 	pageheight = $("#rule").height();
 	pagewidth = $("#rule").width();
-	
+
 	measure = (pageheight-100);
 	$("#wsfoot").css({top:measure});
 	$("#wsffoot").css({top:measure});
-	
-	measure = ((pagewidth-800)/2);
-	$("#wsfbody").css({left:measure});
-	
+
+	measure = ((pagewidth-500)/2);
+	$("#wsfbody").css({left:measure})
+
+    measure -=175;
+    $("#blogo").css({left:measure});
+
 	measure = $("#wsnav").height()+50;
+    $("#blogo").css({top:measure-50});
 	$("#wsselb").css({top:measure});
-	
-	measure = ((pagewidth-800)/2)+$("#wsnvspn").width()+74;
-	
+
+	measure = ((pagewidth-400)/2)+$("#wsnvspn").width()+24;
+
 	/*   NAV STUFF TO BE CONTINUED  */
-	nbxr = (((pagewidth-800)/2)+683);
-	nbxl = measure;
-	
-	
-	$("#wsselb").css({left:measure});
-	$("#wsselt").css({left:measure});
-	
+    nbxl = measure;
+	nbxr = (((pagewidth-400)/2)+384);
+
+
+	nmeas = nbxl+(96*nselect);
+	$("#wsselb").css({left:nmeas});
+
 	// Position the Nav bar correctly
 	measure = $("#wsfoot").height();
-	tmeas = ((pageheight-measure)/2);
-	measure = (tmeas-($("#wsnav").height()/2));
-	$("#wsnav").css({top:measure});
+	tmeas = 100;
+	measure = (tmeas-($("#wsnav").height()/2)+50);
+	$("#wsnav").css({top:100});
 	tmeas = measure-10;
-	$("#wsselt").css({top:tmeas});
 	measure = tmeas+$("#wsnav").height()+10;
 	$("#wsselb").css({top:measure});
-	
+
+
 };
+
+
 
 $(document).ready(function()
 {
+
+	$(document).on("click","#wsnav",function(e) {
+		tmeas = (e.pageX-nbxl)/96;
+		nselect = Math.floor(tmeas);
+		if(nselect>2){nselect=2;}
+	});
+
   $(document).mousemove(function(e)
   {
       measure = e.pageX;
-      if(measure>nbxl && measure<nbxr)
+      tmeas = e.pageY;
+      if(measure>nbxl && measure<nbxr && tmeas<200 && tmeas>100)
       {
-        if(nbon==1){
-          
-          nbon = 0;
-        }
-        if(nbon==0){
-        tmeas = measure;
-        tmeas-=nbxl;
+        tmeas = measure-nbxl;
         nmodn = Math.floor(tmeas/96);
-        measure=(tmeas-(tmeas%96))+nbxl;
-        if(nmodn!=nmod){
-          $("#wsselb").stop().animate({left:measure},250,function(){});
-          $("#wsselt").stop().animate({left:measure},250,function(){});
-          
-          /**Link target change and image change for icons background**/
-          
-            if(nmodn==1){
-                $("#wsbhome").css({backgroundPosition:'-62px -32px'});
-                $("#wsbwad").css({backgroundPosition:'0px -32px'});
-                $("#wsbghub").css({backgroundPosition:'-64px -32px'});
-                nbscur=1;
-                }
-            
-            else if(nmodn==0){
-                $("#wsbhome").css({backgroundPosition:'0px -32px'});
-                $("#wsbwad").css({backgroundPosition:'-64px -32px'});
-                $("#wsbghub").css({backgroundPosition:'-64px -32px'});
-            }
-
-            else if(nmodn==2){
-                $("#wsbhome").css({backgroundPosition:'-62px -32px'});
-                $("#wsbwad").css({backgroundPosition:'-64px -32px'});
-                $("#wsbghub").css({backgroundPosition:'0px -32px'});
-            }
-            
-            else{
-                $("#wsbhome").css({backgroundPosition:'-62px -32px'});
-                $("#wsbwad").css({backgroundPosition:'-64px -32px'});
-                $("#wsbghub").css({backgroundPosition:'-64px -32px'});
-                nbscur=0;
-                }
-            
-            /** End of link target change and image change for icons background, the first link is changed when not in focus later in this script **/
-          
-          nmod=nmodn;
-          }
-        }noob = 1;
+				if(nmodn>2){nmodn=2;}
+					measure = nbxl+(96*nmodn);
+          $("#wsselb").stop().animate({left:measure},0,function(){});
+					bhome.draw(nmodn);
+					bimg.draw(nmodn);
+					bhub.draw(nmodn);
+					noob = 1;
       } else if(noob){
-          $("#wsselb").stop().animate({left:nbxl},500,function(){});
-          $("#wsselt").stop().animate({left:nbxl},500,function(){});
-          $("#wsbhome").css({backgroundPosition:'0px -32px'});nbscur=0;
-          $("#wsbwad").css({backgroundPosition:'-64px -32px'});
-          $("#wsbghub").css({backgroundPosition:'-64px -32px'});
-          noob=0;
+					nmeas = nbxl+(96*nselect);
+					$("#wsselb").stop().animate({left:nmeas},0,function(){});
+					bhome.draw(nselect);
+					bimg.draw(nselect);
+					bhub.draw(nselect);
+					noob=0;
       }
   });
 
 	windowChange();
 });
 
-$(window).resize(function () { 
+$(window).resize(function () {
 	windowChange();
 });
