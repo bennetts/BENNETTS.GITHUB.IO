@@ -12,6 +12,18 @@
 	opacity: 0.65;
 }
 
+#wsfoot {
+	position: absolute;
+	left:0px;
+	border:5px;
+	border-right: 20px;
+	border-left: 20px;
+	border-style: solid;
+	border-color: 4c05f2;
+	margin-left:20px;
+	background-color:#4c05f2;
+}
+
 #wsfbody {
 	position:absolute;
 	width:800px;
@@ -27,6 +39,8 @@
 	background-color:#0606EC;
 	top:200px;
 	left:485px;
+	filter: alpha(opacity=85);
+	opacity: 0.65;
 }
 
 .wsh1 {
@@ -62,7 +76,7 @@
 }
 
 #wsbwad {
-  background:url("../img/mcs.png");
+  background:url("../img/nav_image.png");
   background-position:-64px -32px;
 }
 
