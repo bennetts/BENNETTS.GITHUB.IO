@@ -27,6 +27,7 @@
 #wsfbody {
 	position:absolute;
 	width:800px;
+	float:right;
 	height:100%;
 	top:0px;
 	z-index:-1;
@@ -60,7 +61,7 @@
 
 .wsbtn {
   background-color:#FFFFFF;
-  float:right;
+  float:center;
   height:95px;
   width:64px;
   margin-left:30px;
