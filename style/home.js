@@ -22,26 +22,20 @@ var noob = 1; /* nav out of bounds */
 var nselect = 0;
 var nmeas;
 
+var bnavbar = new navbar("#wsnav", "#wsselb", "#rule", "#wsnvspn", "#wsfbody");
+		bnavbar._addbutton("#wsbhome");
+		bnavbar._addbutton("#wsbwad");
+		bnavbar._addbutton("#wsbghub");
 
-function button(name, index) {
-	  this.name = name;
-		this.index = index;
-	  this.draw = function(hpos) {
-			if(index==hpos){
-			$(this.name).css({backgroundPosition:'0px -32px'});nbscur=0;
-			} else {
-				$(this.name).css({backgroundPosition:'-64px -32px'});
-			}
-  };
-};
-
-var bhome = new button("#wsbhome", 0);
-var bimg = new button("#wsbwad", 1);
-var bhub = new button("#wsbghub", 2);
 
 /*88888888888888888888888888888*/
 
 function windowChange() {
+	navleft = 0;
+ 	navtop = 100;
+
+	bnavbar._update();
+
 	pageheight = $("#rule").height();
 	pagewidth = $("#rule").width();
 
@@ -50,33 +44,24 @@ function windowChange() {
 	$("#wsffoot").css({top:measure});
 
 	measure = ((pagewidth-500)/2);
-	$("#wsfbody").css({left:measure})
-
-    measure -=175;
+    measure -=300;
     $("#blogo").css({left:measure});
 
 	measure = $("#wsnav").height()+50;
     $("#blogo").css({top:measure-50});
-	$("#wsselb").css({top:measure});
 
 	measure = ((pagewidth-400)/2)+$("#wsnvspn").width()+24;
 
+	alert($("#test").width());
+
 	/*   NAV STUFF TO BE CONTINUED  */
-    nbxl = measure;
+  nbxl = measure;
 	nbxr = (((pagewidth-400)/2)+384);
 
 
-	nmeas = nbxl+(96*nselect);
-	$("#wsselb").css({left:nmeas});
 
 	// Position the Nav bar correctly
 	measure = $("#wsfoot").height();
-	tmeas = 100;
-	measure = (tmeas-($("#wsnav").height()/2)+50);
-	$("#wsnav").css({top:100});
-	tmeas = measure-10;
-	measure = tmeas+$("#wsnav").height()+10;
-	$("#wsselb").css({top:measure});
 
 
 };
@@ -87,7 +72,7 @@ $(document).ready(function()
 {
 
 	$(document).on("click","#wsnav",function(e) {
-		tmeas = (e.pageX-nbxl)/96;
+		tmeas = (e.pageX-nbxl)/$("#wsbhome").width();
 		nselect = Math.floor(tmeas);
 		if(nselect>2){nselect=2;}
 	});
@@ -103,16 +88,12 @@ $(document).ready(function()
 				if(nmodn>2){nmodn=2;}
 					measure = nbxl+(96*nmodn);
           $("#wsselb").stop().animate({left:measure},0,function(){});
-					bhome.draw(nmodn);
-					bimg.draw(nmodn);
-					bhub.draw(nmodn);
+					bnavbar._draw(nmodn);
 					noob = 1;
       } else if(noob){
 					nmeas = nbxl+(96*nselect);
 					$("#wsselb").stop().animate({left:nmeas},0,function(){});
-					bhome.draw(nselect);
-					bimg.draw(nselect);
-					bhub.draw(nselect);
+					bnavbar._draw(nselect);
 					noob=0;
       }
   });
