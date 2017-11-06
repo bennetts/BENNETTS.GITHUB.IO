@@ -52,8 +52,6 @@ function windowChange() {
 
 	measure = ((pagewidth-400)/2)+$("#wsnvspn").width()+24;
 
-	alert($("#test").width());
-
 	/*   NAV STUFF TO BE CONTINUED  */
   nbxl = measure;
 	nbxr = (((pagewidth-400)/2)+384);
@@ -72,7 +70,7 @@ $(document).ready(function()
 {
 
 	$(document).on("click","#wsnav",function(e) {
-		tmeas = (e.pageX-nbxl)/$("#wsbhome").width();
+		tmeas = (e.pageX-nbxl)/94;
 		nselect = Math.floor(tmeas);
 		if(nselect>2){nselect=2;}
 	});
