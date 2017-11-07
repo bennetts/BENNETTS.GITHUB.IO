@@ -1,0 +1,56 @@
+#wsbnav {
+	position:absolute;
+	width:500px;
+	height:100px;
+	top:50px;
+	z-index:-1;
+	border-radius:20px;
+	border-bottom-right-radius: 0px;
+	background-color:#0606EC;
+	zoom: 1;
+	filter: alpha(opacity=85);
+	opacity: 0.65;
+}
+
+#wsfbody {
+	position:absolute;
+	width:800px;
+	float:right;
+	height:100%;
+	top:0px;
+	z-index:-1;
+}
+
+.wsbtn {
+  background-color:#FFFFFF;
+  position:absolute;
+  height:128px;
+  width:64px;
+  z-index:3;
+    background-position:-64px 0px;
+}
+
+.wsbtn:hover {
+  cursor:pointer;
+}
+
+
+#wsselb {
+  position:absolute;
+  z-index:-1;
+  height:12px;
+  width:94px;
+  background:url("./img/mselb.png");
+}
+
+#wsbhome {
+  background:url("./img/mho.png");
+}
+
+#wsbwad {
+  background:url("./img/nav_image.png");
+}
+
+#wsbghub {
+    background:url("./img/github.png");
+}
