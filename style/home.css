@@ -1,4 +1,16 @@
 /* General CSS */
+#home {
+	position:absolute;
+}
+
+#wsfield {
+	position:absolute;
+	background-color:#FFFFFF;
+	border:5px solid #4C05F2;
+	border-radius:10px;
+	border-color:#4C05F2;
+	margin:0;
+}
 
 * { margin: 0; padding: 0;  }
 
