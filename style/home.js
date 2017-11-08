@@ -21,7 +21,7 @@ barcher.addWidget(blogo, blogo._click, blogo._update);
 barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update);
 barcher.addWidget(babout, babout._click, babout._update);
 
-
+var sky = new bsky();
 
 /*88888888888888888888888888888*/
 
@@ -40,6 +40,11 @@ $(document).ready(function()
   $(document).mousemove(function(e) {
 		bnavbar._mousemove(e);
   });
+
+    sky.bcreate();
+    sky.loop();
+
+    setInterval(function(){sky.loop()},50);
 
 	windowChange();
 });

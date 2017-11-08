@@ -112,6 +112,7 @@ function Navbar(nname, ntrack, nruler, nright) {
       _nheight = $(_name).height();
       _ruleroffset = $(_ruler).offset();
 
+
       _pageheight = $(_ruler).height();
       _top = this.navtop(_pageheight, _nheight);
 

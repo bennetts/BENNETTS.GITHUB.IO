@@ -2,6 +2,8 @@
 
 * { margin: 0; padding: 0;  }
 
+canvas{ position: fixed; z-index: -10; }
+
 body {
 	font: 18px/1.5 "myriad-pro-1", "myriad-pro-2", HelveticaNeue, Helvetica, Arial, serif;
 	background: #000000;
