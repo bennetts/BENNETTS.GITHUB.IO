@@ -5,16 +5,8 @@ var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule");
 
 var blogo = new BaseWidget("#blogo", "#rule");
 var babout = new BaseWidget("#wsfoot", "#rule");
-var bhome = new BaseWidget("#home", "#rule");
 var bfield = new BaseWidget("#wsfield", "#rule");
 
-bhome.navleft = function() {
-	return $("#rule").offset().left+40;
-};
-
-bhome.navtop = function() {
-	return $("#blogo").offset().top+150;
-};
 
 babout.navleft = function() {
 	return $("#rule").offset().left-20;
@@ -33,7 +25,7 @@ bfield.navtop = function() {
 };
 
 bfield.navwidth = function() {
-	return $("#rule").width();
+	return $("#rule").width()-10;
 };
 
 bfield.navheight = function() {
@@ -48,7 +40,6 @@ var barcher = new Barchitect("#rule");
 		barcher.addWidget(blogo, blogo._click, blogo._update);
 		barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update);
 		barcher.addWidget(babout, babout._click, babout._update);
-		barcher.addWidget(bhome, bhome._click, bhome._update);
 		barcher.addWidget(bfield, bfield._click, bfield._update);
 
 var sky = new bsky();
