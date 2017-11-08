@@ -1,5 +1,7 @@
 /* General CSS */
 
+canvas{ position: fixed; z-index: -10; }
+
 * { margin: 0; padding: 0;  }
 
 body {

@@ -27,6 +27,8 @@ var bnavbar = new navbar("#wsnav", "#wsselb", "#rule", "#wsnvspn", "#wsfbody");
 		bnavbar._addbutton("#wsbwad");
 		bnavbar._addbutton("#wsbghub");
 
+var sky = new bsky();
+
 
 /*88888888888888888888888888888*/
 
@@ -94,7 +96,13 @@ $(document).ready(function()
 					bnavbar._draw(nselect);
 					noob=0;
       }
+
   });
+
+    sky.bcreate();
+    sky.loop();
+
+    setInterval(function(){sky.loop()},50);
 
 	windowChange();
 });
