@@ -1,12 +1,25 @@
-var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule");
+var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule", "#wsright");
 	bnavbar._addbutton("#wsbhome");
 	bnavbar._addbutton("#wsbwad");
 	bnavbar._addbutton("#wsbghub");
 
+var blogo = new BaseWidget("#blogo", "#rule");
+var babout = new BaseWidget("#wsfoot", "#rule");
+
+blogo.navtop = function() {
+	return 50;
+};
+
+babout.navtop = function() {
+	return $("#rule").height()-$("#wsfoot").height()-50;
+};
+
+
 var barcher = new Barchitect("#rule");
 
-var bnav_dimensions = new Dimensions(0,0,0,0);
-		barcher.addWidget(bnav_dimensions, bnavbar, bnavbar._click, bnavbar._update);
+barcher.addWidget(blogo, blogo._click, blogo._update);
+barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update);
+barcher.addWidget(babout, babout._click, babout._update);
 
 
 
@@ -14,14 +27,14 @@ var bnav_dimensions = new Dimensions(0,0,0,0);
 
 function windowChange() {
 
-	bnavbar._update();
+	barcher.update();
 
 }
 $(document).ready(function()
 {
 
 	$(document).on("click",function(e) {
-		bnavbar._click(e);
+		barcher._click(e);
 	});
 
   $(document).mousemove(function(e) {

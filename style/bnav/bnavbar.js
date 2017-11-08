@@ -17,7 +17,7 @@ function Button(name, index) {
 }
 
 
-function Navbar(nname, ntrack, nruler) {
+function Navbar(nname, ntrack, nruler, nright) {
 
 
 
@@ -29,13 +29,14 @@ function Navbar(nname, ntrack, nruler) {
         var _trackerwidth = 94;
         var _debg = 0;
         var _length = 0;  //number of buttons
+        var _ruleroffset = 0;
 
 
               //Define how far to the right you want the navbar
               this.navleft = function(pwidth, nwidth) {
-                  if(pwidth>(nwidth*3.5)) return (nwidth*2);
-                  else if(pwidth>(nwidth*2)) return ((pwidth-nwidth));
-                  else return (pwidth-nwidth+(nwidth-((_length+1)*_buttonspacing)));
+                  if(pwidth<960) {
+                      return (pwidth-nwidth+(nwidth-((_length+1)*_buttonspacing)));
+                  } else return (pwidth-nwidth+_ruleroffset.left);
               };
 
               //define how far down you want the navbar
@@ -54,6 +55,7 @@ function Navbar(nname, ntrack, nruler) {
     var _index = [];  //holds all button divs
   var _name = nname; //the navbar div
   var _track = ntrack; //the tracker div (that little thing under the navbar)
+  var _bright = nright; //the thing on the bottom right of the navbar
 
   var _nwidth = 0;
   var _nheight = 0;
@@ -103,11 +105,12 @@ function Navbar(nname, ntrack, nruler) {
 
 
   //Run this every time the page updates
-  this._update = function(_d) {
+  this._update = function() {
       this._draw(_curselect);
 
       _nwidth = $(_name).width();
       _nheight = $(_name).height();
+      _ruleroffset = $(_ruler).offset();
 
       _pageheight = $(_ruler).height();
       _top = this.navtop(_pageheight, _nheight);
@@ -119,9 +122,11 @@ function Navbar(nname, ntrack, nruler) {
           _index[i].update(_left, _top, _buttonspacing);
       }
 
+      $(_bright).css({left:(_left+_nwidth-$(_bright).width()),top:(_top+_nheight),height:(_pageheight-50-_top-_nheight)});
       $(_name).css({left:_left,top:_top});
 
-      $(_track).css({left: _left + _buttonspacing * (_curselect + 1) - ((_trackerwidth-_buttonwidth)/2), top:(_top+_nheight)})
+      $(_track).css({left: _left + _buttonspacing * (_curselect + 1) - ((_trackerwidth-_buttonwidth)/2), top:(_top+_nheight)});
+
   };
 
   this._click = function(e) {
