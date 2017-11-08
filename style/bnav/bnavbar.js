@@ -30,14 +30,12 @@ function Navbar(nname, ntrack, nruler) {
         var _debg = 0;
         var _length = 0;  //number of buttons
 
+
               //Define how far to the right you want the navbar
               this.navleft = function(pwidth, nwidth) {
-
                   if(pwidth>(nwidth*3.5)) return (nwidth*2);
                   else if(pwidth>(nwidth*2)) return ((pwidth-nwidth));
                   else return (pwidth-nwidth+(nwidth-((_length+1)*_buttonspacing)));
-
-
               };
 
               //define how far down you want the navbar
@@ -105,7 +103,7 @@ function Navbar(nname, ntrack, nruler) {
 
 
   //Run this every time the page updates
-  this._update = function() {
+  this._update = function(_d) {
       this._draw(_curselect);
 
       _nwidth = $(_name).width();

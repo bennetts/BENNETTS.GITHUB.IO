@@ -3,6 +3,12 @@ var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule");
 	bnavbar._addbutton("#wsbwad");
 	bnavbar._addbutton("#wsbghub");
 
+var barcher = new Barchitect("#rule");
+
+var bnav_dimensions = new Dimensions(0,0,0,0);
+		barcher.addWidget(bnav_dimensions, bnavbar, bnavbar._click, bnavbar._update);
+
+
 
 /*88888888888888888888888888888*/
 
