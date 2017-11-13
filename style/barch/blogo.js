@@ -43,4 +43,7 @@ function BaseWidget(nname, nruler) {
     this._click = function(e) {
 
     };
+
+    this._hide = function(c) {
+    };
 }

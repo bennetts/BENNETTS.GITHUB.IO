@@ -17,7 +17,7 @@ function Button(name, index) {
 }
 
 
-function Navbar(nname, ntrack, nruler) {
+function Navbar(nname, ntrack, nruler, narch, narch_cb) {
 
 
 
@@ -42,7 +42,7 @@ function Navbar(nname, ntrack, nruler) {
               //define how far down you want the navbar
               this.navtop = function(pheight, nheight) {
                   if(_debg>0) _debg = pheight+nheight;
-                return 50;
+                return 75;
               };
 
         //////////////////////////////////////
@@ -50,9 +50,10 @@ function Navbar(nname, ntrack, nruler) {
 
 
 
+  var arch = narch;
+  var arch_cb = narch_cb;
 
-
-    var _index = [];  //holds all button divs
+  var _index = [];  //holds all button divs
   var _name = nname; //the navbar div
   var _track = ntrack; //the tracker div (that little thing under the navbar)
 
@@ -126,13 +127,20 @@ function Navbar(nname, ntrack, nruler) {
 
       $(_track).css({left: _left + _buttonspacing * (_curselect + 1) - ((_trackerwidth-_buttonwidth)/2), top:(_top+_nheight)});
 
+      arch_cb.call(arch,_curselect);
   };
 
   this._click = function(e) {
       if(e.pageX>(_left+_buttonspacing) && e.pageX<(_left+(_buttonspacing*(_length+1))) && e.pageY<(_nheight+_top) && e.pageY>_top)
       {
-  		_curselect = Math.floor((e.pageX-this.navleft(_pagewidth, _nwidth))/_buttonspacing)-1;
-  		if(_curselect>_length){_curselect=_length;}
+    		_curselect = Math.floor((e.pageX-this.navleft(_pagewidth, _nwidth))/_buttonspacing)-1;
+    		if(_curselect>_length){_curselect=_length;}
+
+        arch_cb.call(arch,_curselect);
       }
+  };
+
+  this._hide = function(c) {
+
   };
 }
