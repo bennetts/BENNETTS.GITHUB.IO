@@ -1,11 +1,9 @@
-var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule");
-	bnavbar._addbutton("#wsbhome");
-	bnavbar._addbutton("#wsbwad");
-	bnavbar._addbutton("#wsbghub");
+
 
 var blogo = new BaseWidget("#blogo", "#rule");
 var babout = new BaseWidget("#wsfoot", "#rule");
 var bfield = new BaseWidget("#wsfield", "#rule");
+
 
 
 babout.navleft = function() {
@@ -21,7 +19,7 @@ babout.navtop = function() {
 };
 
 bfield.navtop = function() {
-	return $("#blogo").offset().top+120;
+	return 50+120;
 };
 
 bfield.navwidth = function() {
@@ -31,16 +29,37 @@ bfield.navwidth = function() {
 bfield.navheight = function() {
 	var _i = $("#rule").height();
 	var _j = $("#wsfoot").height();
-	var _k = $("#blogo").offset().top;
+	var _k = 75;
 	return (_i-_j-(_k+190));
 };
 
 
+bfield._hide = function(c) {
+	if(c===0)$("#wsfield").show();
+	else $("#wsfield").hide();
+};
+
+blogo._hide = function(c) {
+	if(c===1)$("#blogo").hide();
+	else $("#blogo").show();
+};
+
+babout._hide = function(c) {
+	if(c===1)$("#wsfoot").hide();
+	else $("#wsfoot").show();
+};
+
 var barcher = new Barchitect("#rule");
-		barcher.addWidget(blogo, blogo._click, blogo._update);
-		barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update);
-		barcher.addWidget(babout, babout._click, babout._update);
-		barcher.addWidget(bfield, bfield._click, bfield._update);
+
+var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule", barcher, barcher.changestate);
+		bnavbar._addbutton("#wsbhome");
+		bnavbar._addbutton("#wsbwad");
+		bnavbar._addbutton("#wsbghub");
+
+		barcher.addWidget(blogo, blogo._click, blogo._update, blogo._hide);
+		barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update, bnavbar._hide);
+		barcher.addWidget(babout, babout._click, babout._update, babout._hide);
+		barcher.addWidget(bfield, bfield._click, bfield._update, bfield._hide);
 
 var sky = new bsky();
 

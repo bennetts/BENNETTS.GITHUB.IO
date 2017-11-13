@@ -19,10 +19,7 @@ function bsky() {
             map: new THREE.TextureLoader().load("img/skybox/top.jpg"),
             side: THREE.DoubleSide
         }),
-        new THREE.MeshBasicMaterial({
-            map: new THREE.TextureLoader().load("img/skybox/bottom.jpg"),
-            side: THREE.DoubleSide
-        }),
+        0,
         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("img/skybox/r1.jpg"), side: THREE.DoubleSide}),
         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("img/skybox/r2.jpg"), side: THREE.DoubleSide})
     ];
@@ -53,7 +50,11 @@ function bsky() {
     };
 
     var render = function () {
+
         renderer.render(scene, camera);
+        camera.position.y = -1000;
+        camera.position.z = 1000;
+        camera.rotation.x = .3;
     };
 
     this.loop = function () {

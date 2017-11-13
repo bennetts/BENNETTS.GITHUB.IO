@@ -6,6 +6,7 @@
 	z-index:-1;
 	border-radius:20px;
 	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
 	background-color:#0606EC;
 	zoom: 1;
 	filter: alpha(opacity=85);
@@ -26,7 +27,7 @@
   position:absolute;
   height:128px;
   width:64px;
-  z-index:3;
+  z-index:1;
     background-position:-64px 0px;
 }
 
@@ -37,7 +38,7 @@
 
 #wsselb {
   position:absolute;
-  z-index:-1;
+  z-index:3;
   height:12px;
   width:94px;
   background:url("./img/mselb.png");
