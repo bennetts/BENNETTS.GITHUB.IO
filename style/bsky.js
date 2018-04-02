@@ -1,6 +1,6 @@
 function bsky() {
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 10000);
+    var camera = new THREE.PerspectiveCamera(155, window.innerWidth / window.innerHeight, 0.1, 10000);
 
     var renderer = new THREE.WebGLRenderer();
 
@@ -24,12 +24,18 @@ function bsky() {
         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("img/skybox/r2.jpg"), side: THREE.DoubleSide})
     ];
 
+    var circgeometry = new THREE.SphereGeometry( 5, 32, 32 );
+    var circmaterial = new THREE.MeshBasicMaterial( {color: 0x000000 } );
+    var sphere = new THREE.Mesh( circgeometry, circmaterial );
+    scene.add( sphere );
+
     var cube = new THREE.Mesh(geometry, cubeMaterials);
 
 
     this.bcreate = function(){
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
+            cube.rotation.z += 0.5;
 
         window.addEventListener('resize', function () {
             var width = window.innerWidth;
