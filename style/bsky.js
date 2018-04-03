@@ -38,7 +38,7 @@ function bsky() {
     this.bcreate = function(){
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
-            cube.rotation.z += 0.5;
+            cube.rotation.z += 0.3;
 
         window.addEventListener('resize', function () {
             var width = window.innerWidth;
@@ -73,7 +73,7 @@ function bsky() {
             camera.fov = 150 + Math.min(19, 3*(_EffectDiameter/2)/_mouseDistance);
       } else {
 
-              camera.fov = 90;
+              camera.fov = 150;
       }
 
 
