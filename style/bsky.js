@@ -19,7 +19,10 @@ function bsky() {
             map: new THREE.TextureLoader().load("img/skybox/top.jpg"),
             side: THREE.DoubleSide
         }),
-        0,
+        new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load("img/skybox/bottom.jpg"),
+            side: THREE.DoubleSide
+        }),
         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("img/skybox/r1.jpg"), side: THREE.DoubleSide}),
         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("img/skybox/r2.jpg"), side: THREE.DoubleSide})
     ];
@@ -51,16 +54,39 @@ function bsky() {
 
     var o;
 
+
+    this._updateScreenSize = function () {
+        _EffectDiameter = window.innerWidth/7;
+    };
+
+        var _EffectRadius;
+        var _mouseDistance;
+
+    this._updateMousePosition = function (e) {
+      mousex = e.pageX;
+      mousey = e.pageY;
+
+      if((mousex>(window.innerWidth/2-(_EffectDiameter/2))&&mousex<(window.innerWidth/2+(_EffectDiameter/2)))&&(mousey>(window.innerHeight/2-(_EffectDiameter/2))&&mousey<(window.innerHeight/2+(_EffectDiameter/2))))
+      {
+            _mouseDistance = Math.sqrt(Math.pow((mousex-(window.innerWidth/2)),2)+Math.pow((mousey-(window.innerHeight/2)),2));
+
+            camera.fov = 150 + Math.min(19, 3*(_EffectDiameter/2)/_mouseDistance);
+      } else {
+
+              camera.fov = 90;
+      }
+
+
+      camera.updateProjectionMatrix();
+    };
+
     var update = function () {
         cube.rotation.y += 0.0015;
     };
 
     var render = function () {
-
         renderer.render(scene, camera);
-        camera.position.y = -1000;
-        camera.position.z = 1000;
-        camera.rotation.x = .3;
+
     };
 
     this.loop = function () {

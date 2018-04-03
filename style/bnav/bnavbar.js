@@ -17,7 +17,7 @@ function Button(name, index) {
 }
 
 
-function Navbar(nname, ntrack, nruler, narch, narch_cb) {
+function Navbar(nname, ntrack, nruler, nright) {
 
 
 
@@ -42,7 +42,7 @@ function Navbar(nname, ntrack, nruler, narch, narch_cb) {
               //define how far down you want the navbar
               this.navtop = function(pheight, nheight) {
                   if(_debg>0) _debg = pheight+nheight;
-                return 75;
+                return 50;
               };
 
         //////////////////////////////////////
@@ -50,12 +50,12 @@ function Navbar(nname, ntrack, nruler, narch, narch_cb) {
 
 
 
-  var arch = narch;
-  var arch_cb = narch_cb;
 
-  var _index = [];  //holds all button divs
+
+    var _index = [];  //holds all button divs
   var _name = nname; //the navbar div
   var _track = ntrack; //the tracker div (that little thing under the navbar)
+  var _bright = nright; //the thing on the bottom right of the navbar
 
   var _nwidth = 0;
   var _nheight = 0;
@@ -123,24 +123,18 @@ function Navbar(nname, ntrack, nruler, narch, narch_cb) {
           _index[i].update(_left, _top, _buttonspacing);
       }
 
+      $(_bright).css({left:(_left+_nwidth-$(_bright).width()),top:(_top+_nheight),height:(_pageheight-50-_top-_nheight)});
       $(_name).css({left:_left,top:_top});
 
       $(_track).css({left: _left + _buttonspacing * (_curselect + 1) - ((_trackerwidth-_buttonwidth)/2), top:(_top+_nheight)});
 
-      arch_cb.call(arch,_curselect);
   };
 
   this._click = function(e) {
       if(e.pageX>(_left+_buttonspacing) && e.pageX<(_left+(_buttonspacing*(_length+1))) && e.pageY<(_nheight+_top) && e.pageY>_top)
       {
-    		_curselect = Math.floor((e.pageX-this.navleft(_pagewidth, _nwidth))/_buttonspacing)-1;
-    		if(_curselect>_length){_curselect=_length;}
-
-        arch_cb.call(arch,_curselect);
+  		_curselect = Math.floor((e.pageX-this.navleft(_pagewidth, _nwidth))/_buttonspacing)-1;
+  		if(_curselect>_length){_curselect=_length;}
       }
-  };
-
-  this._hide = function(c) {
-
   };
 }
