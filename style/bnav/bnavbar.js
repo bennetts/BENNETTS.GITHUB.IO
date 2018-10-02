@@ -137,4 +137,8 @@ function Navbar(nname, ntrack, nruler, nright) {
   		if(_curselect>_length){_curselect=_length;}
       }
   };
+
+  this.skyCurSelect = function () {
+        return _curselect;
+  };
 }

@@ -1,12 +1,19 @@
 function bsky() {
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(155, window.innerWidth / window.innerHeight, 0.1, 10000);
+    
+/*
+'`'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    Render the Galaxy
+'``///////////////////////////////////////////////////////////////
+*/
+
+    var GalaxyScene = new THREE.Scene();
+    var ViewPort = new THREE.PerspectiveCamera(155, window.innerWidth / window.innerHeight, 0.1, 10000);
 
     var renderer = new THREE.WebGLRenderer();
 
-    var geometry = new THREE.CubeGeometry(3000, 3000, 3000);
+    var GalaxyCubeGeometry = new THREE.CubeGeometry(3000, 3000, 3000);
 
-    var cubeMaterials = [
+    var GalaxyCubeMaterial = [
         new THREE.MeshBasicMaterial({
             map: new THREE.TextureLoader().load("img/skybox/left.jpg"),
             side: THREE.DoubleSide
@@ -28,27 +35,35 @@ function bsky() {
     ];
 
     var circgeometry = new THREE.SphereGeometry( 5, 32, 32 );
-    var circmaterial = new THREE.MeshBasicMaterial( {color: 0x000000 } );
-    var sphere = new THREE.Mesh( circgeometry, circmaterial );
-    scene.add( sphere );
+    var circmaterial = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+    var GalaxySphere = new THREE.Mesh( circgeometry, circmaterial );
 
-    var cube = new THREE.Mesh(geometry, cubeMaterials);
+    var GalaxyCube = new THREE.Mesh(GalaxyCubeGeometry, GalaxyCubeMaterial);
 
+/*
+'`'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+   Render the Menu
+'``///////////////////////////////////////////////////////////////
+*/
+
+
+    var MenuScene = new THREE.Scene();
 
     this.bcreate = function(){
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
-            cube.rotation.z += 0.3;
+        GalaxyCube.rotation.z += 0.3;
 
         window.addEventListener('resize', function () {
             var width = window.innerWidth;
             var height = window.innerHeight;
             renderer.setSize(width, height);
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
+            ViewPort.aspect = width / height;
+            ViewPort.updateProjectionMatrix();
         });
 
-        scene.add(cube);
+        GalaxyScene.add( GalaxySphere );
+        GalaxyScene.add(  GalaxyCube  );
 
     };
 
@@ -70,27 +85,39 @@ function bsky() {
       {
             _mouseDistance = Math.sqrt(Math.pow((mousex-(window.innerWidth/2)),2)+Math.pow((mousey-(window.innerHeight/2)),2));
 
-            camera.fov = 150 + Math.min(19, 3*(_EffectDiameter/2)/_mouseDistance);
+            ViewPort.fov = 150 + Math.min(19, 3*(_EffectDiameter/2)/_mouseDistance);
       } else {
 
-              camera.fov = 150;
+              ViewPort.fov = 150;
       }
 
 
-      camera.updateProjectionMatrix();
+      ViewPort.updateProjectionMatrix();
     };
 
-    var update = function () {
-        cube.rotation.y += 0.0015;
+    var ThreejsGalaxyUpdate = function () {
+        GalaxyCube.rotation.y += 0.0015;
+    };
+    
+    var ThreejsGalaxyRender = function (curselect) {
+        switch(curselect){
+            case 0:
+                renderer.render(GalaxyScene, ViewPort);
+                break;
+            case 1:
+                renderer.render(GalaxyScene, ViewPort);
+                break;
+            case 2:
+                renderer.render(GalaxyScene, ViewPort);
+                break;
+            default:
+                renderer.render(GalaxyScene, ViewPort);
+                break;
+        }
     };
 
-    var render = function () {
-        renderer.render(scene, camera);
-
-    };
-
-    this.loop = function () {
-        update();
-        render();
+    this.loop = function (curselect) {
+         ThreejsGalaxyUpdate();
+         ThreejsGalaxyRender(curselect);
     };
 };

@@ -49,7 +49,13 @@ $(document).ready(function()
 		sky._updateMousePosition(e);
   });
 
-    setInterval(function(){sky.loop()},50);
+
+	  /////////////////////////////////////////
+	  //Update the Sky
+	  /////////////////////////////////////////
+    setInterval(function(){
+		sky.loop(bnavbar.skyCurSelect()); 
+	},50);
 
 	windowChange();
 });
