@@ -5,6 +5,7 @@
 	<link rel=stylesheet type="text/css" href="style/home.css">
 	<link rel=stylesheet type="text/css" href="style/ws.css">
 	<link rel=stylesheet type="text/css" href="style/bnav/bnavbar.css">
+	<link rel=stylesheet type="text/css" href="style/bgalaxy.css">
 	<script type="text/javascript" src="style/three.js"></script>
 	<script type="text/javascript" src="style/whs.min.js"></script>
 	<script type="text/javascript" src="style/bsky.js"></script>
@@ -16,6 +17,7 @@
 
 </head>
 <body>
+	<div id="app"></div>
   <div id="wsffoot"></div>
 
 
@@ -32,5 +34,111 @@
 <div id="wsfoot"></div>
 
   <div id="rule"></div>
+	<script>
+			const app = new WHS.App([
+						new WHS.ElementModule({
+						container: document.getElementById('app')
+				}),
+				new WHS.SceneModule(),
+				new WHS.CameraModule({
+						far: 20000,
+						near: 1,
+						position: {
+								y: 10,
+								z: 50
+						}
+				}),
+				new WHS.RenderingModule({
+					bgColor: 0x000000,
+			
+					renderer: {
+							antialias: true,
+							shadowmap: {
+							type: THREE.PCFSoftShadowMap
+							}
+					}
+				}, {shadow: true}),
+					
+					new WHS.ResizeModule()
+		]);
+		
+		// Lights
+		
+		new WHS.AmbientLight({
+				light: {
+				intensity: 0.4
+				}
+		}).addTo(app);
+		
+		var camera = app.get('camera')
+		new WHS.Loop(() => {
+					 camera.rotation.y -= 0.002;
+					 var MathSinI=1;
+					 if(camera.rotation.z >= 0.1 || camera.rotation.z <= -0.1){ MathSinI *= -1; };
+					 camera.rotation.z -= MathSinI*0.001;
+				}).start(app);
+		////////////////////////////////////////////
+		///////////BennettS.github.io
+
+		var GalaxyDistance = 1000;
+		var GalaxyDistanceDelta = 900;
+
+		var GalaxyVerticalSpread = 514;
+
+		var GalaxyObjects = 50;
+
+		var PlanetaryDistance = 300;
+		var PlanetaryDistanceDelta = 100;
+
+		var PlanetaryVerticalSpread = 54;
+
+		var PlanetaryObjects = 2;
+
+		var stars = [];
+		var planets = [];
+		
+
+		function GalaxyRender () {
+				var i;
+				for(i=0; i<GalaxyObjects; i++){    
+						var angle = Math.random()*Math.PI*2;
+						var star = new WHS.Sphere({
+								geometry: {
+								radius: 3,
+								widthSegments: 64,
+								heightSegments: 32
+								},
+						
+								material: new THREE.MeshPhongMaterial({
+								color: 0xF2F2F2
+								}),
+								
+								position: new THREE.Vector3((Math.sin(angle)*GalaxyDistance)+((GalaxyDistanceDelta*Math.random())-(GalaxyDistanceDelta/2)), (Math.random()*GalaxyVerticalSpread)-(GalaxyVerticalSpread/2), (Math.cos(angle)*GalaxyDistance)+((GalaxyDistanceDelta*Math.random())-(GalaxyDistanceDelta/2)))
+						}).addTo(app);
+						stars.push(star);
+				}
+				for(i=0; i<PlanetaryObjects; i++){    
+						var angle = Math.random()*Math.PI*2;
+						var planet = new WHS.Sphere({
+								geometry: {
+								radius: 15,
+								widthSegments: 64,
+								heightSegments: 32
+								},
+						
+								material: new THREE.MeshPhongMaterial({
+								color: 0xF2F2F2
+								}),
+								
+								position: new THREE.Vector3((Math.sin(angle)*PlanetaryDistance)+((PlanetaryDistanceDelta*Math.random())-(PlanetaryDistanceDelta/2)), (Math.random()*PlanetaryVerticalSpread)-(PlanetaryVerticalSpread/2), (Math.cos(angle)*PlanetaryDistance)+((PlanetaryDistanceDelta*Math.random())-(PlanetaryDistanceDelta/2)))
+						}).addTo(app);
+						planets.push(planet);
+				}
+
+		};
+		GalaxyRender();
+		// Start the app
+		app.start();
+	</script>
 </body>
 </html>
