@@ -70,12 +70,29 @@
 				}
 		}).addTo(app);
 		
-		var camera = app.get('camera')
+		var camera = app.get('camera');
+		var ShinyMenuOrb = new WHS.Sphere({
+								geometry: {
+									radius: 15,
+									widthSegments: 64,
+									heightSegments: 32
+								},
+						
+								material: new THREE.MeshPhongMaterial({
+									color: 0xb17b88
+								}),
+								position: new THREE.Vector3(0,0,0)
+						}).addTo(app);
+
+		var GroupShinyMenu = new WHS.Group(ShinyMenuOrb,camera);
+
+		var GroupShinyMenuGrandparent = new WHS.Group(GroupShinyMenu);
+
 		new WHS.Loop(() => {
-					 camera.rotation.y -= 0.002;
+			GroupShinyMenuGrandparent.rotation.y -= 0.002;
 					 var MathSinI=1;
-					 if(camera.rotation.z >= 0.1 || camera.rotation.z <= -0.1){ MathSinI *= -1; };
-					 camera.rotation.z -= MathSinI*0.001;
+					 if(GroupShinyMenuGrandparent.rotation.z >= 0.1 || GroupShinyMenuGrandparent.rotation.z <= -0.1){ MathSinI *= -1; };
+					 GroupShinyMenuGrandparent.rotation.z -= MathSinI*0.001;
 				}).start(app);
 		////////////////////////////////////////////
 		///////////BennettS.github.io
