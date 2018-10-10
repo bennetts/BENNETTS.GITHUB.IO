@@ -68,9 +68,8 @@
 				light: {
 				intensity: 0.4
 				}
-		}).addTo(app);
+		});
 		
-		var camera = app.get('camera');
 		var ShinyMenuOrb = new WHS.Sphere({
 								geometry: {
 									radius: 15,
@@ -82,11 +81,11 @@
 									color: 0xb17b88
 								}),
 								position: new THREE.Vector3(0,0,0)
-						}).addTo(app);
+						});
 
-		var GroupShinyMenu = new WHS.Group(ShinyMenuOrb,camera);
-
-		var GroupShinyMenuGrandparent = new WHS.Group(GroupShinyMenu);
+		var GroupShinyMenu = new WHS.Group(ShinyMenuOrb,app.manager.get('camera'));
+			GroupShinyMenu.position = 0;
+		var GroupShinyMenuGrandparent = new WHS.Group(GroupShinyMenu).addTo(app);
 
 		new WHS.Loop(() => {
 			GroupShinyMenuGrandparent.rotation.y -= 0.002;
@@ -94,6 +93,7 @@
 					 if(GroupShinyMenuGrandparent.rotation.z >= 0.1 || GroupShinyMenuGrandparent.rotation.z <= -0.1){ MathSinI *= -1; };
 					 GroupShinyMenuGrandparent.rotation.z -= MathSinI*0.001;
 				}).start(app);
+
 		////////////////////////////////////////////
 		///////////BennettS.github.io
 
