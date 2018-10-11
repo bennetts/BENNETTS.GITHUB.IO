@@ -5,9 +5,9 @@
 	<link rel=stylesheet type="text/css" href="style/home.css">
 	<link rel=stylesheet type="text/css" href="style/ws.css">
 	<link rel=stylesheet type="text/css" href="style/bnav/bnavbar.css">
-	<link rel=stylesheet type="text/css" href="style/bgalaxy.css">
-	<script type="text/javascript" src="style/three.js"></script>
-	<script type="text/javascript" src="style/whs.min.js"></script>
+	<link rel=stylesheet type="text/css" href="style/bgalaxy.css"> 
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"> </script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/whitestorm.js/2.0.0-beta.9.1/whitestorm.js"> </script>
 	<script type="text/javascript" src="style/bsky.js"></script>
 	<script type="text/javascript" src="style/jquery.js"></script>
 	<script type="text/javascript" src="style/barch/blogo.js"></script>
@@ -35,67 +35,72 @@
 
   <div id="rule"></div>
 	<script>
-			const app = new WHS.App([
-						new WHS.ElementModule({
-						container: document.getElementById('app')
-				}),
-				new WHS.SceneModule(),
-				new WHS.CameraModule({
-						far: 20000,
-						near: 1,
-						position: {
-								y: 10,
-								z: 50
-						}
-				}),
-				new WHS.RenderingModule({
-					bgColor: 0x000000,
-			
-					renderer: {
-							antialias: true,
-							shadowmap: {
-							type: THREE.PCFSoftShadowMap
-							}
-					}
-				}, {shadow: true}),
-					
-					new WHS.ResizeModule()
-		]);
-		
-		// Lights
-		
-		new WHS.AmbientLight({
-				light: {
-				intensity: 0.4
-				}
-		});
-		
-		var ShinyMenuOrb = new WHS.Sphere({
+		const app = new WHS.App([
+  new WHS.ElementModule(document.getElementById('app')),
+  new WHS.SceneModule(),
+  new WHS.CameraModule({
+		far: 20000,
+		near: 1,
+    position: {
+      y: 10,
+      z: 25
+    }
+  }),
+  new WHS.RenderingModule({
+    bgColor: 0x000000,
+
+    renderer: {
+      antialias: true,
+    }
+  }),
+  new WHS.ResizeModule()
+]);
+
+app.manager.get('camera').native.lookAt({x: 0, y: 0, z: 0});
+
+const box2 = new WHS.Sphere({
 								geometry: {
-									radius: 15,
+									radius: 3,
 									widthSegments: 64,
 									heightSegments: 32
 								},
 						
 								material: new THREE.MeshPhongMaterial({
-									color: 0xb17b88
-								}),
-								position: new THREE.Vector3(0,0,0)
-						});
+									color: 0xdacccb	
+								})
+});
 
-		var GroupShinyMenu = new WHS.Group(ShinyMenuOrb,app.manager.get('camera'));
-			GroupShinyMenu.position = 0;
-		var GroupShinyMenuGrandparent = new WHS.Group(GroupShinyMenu).addTo(app);
+box2.position.z = -5; //box 1 is at y 0 and box2 is at y 10
 
-		new WHS.Loop(() => {
-			GroupShinyMenuGrandparent.rotation.y -= 0.002;
-					 var MathSinI=1;
-					 if(GroupShinyMenuGrandparent.rotation.z >= 0.1 || GroupShinyMenuGrandparent.rotation.z <= -0.1){ MathSinI *= -1; };
-					 GroupShinyMenuGrandparent.rotation.z -= MathSinI*0.001;
-				}).start(app);
+const group = new WHS.Group(box2,app.manager.get('camera')); // This is the main group
+const grandGroup = new WHS.Group(group); // This is the parent of the main group
+grandGroup.addTo(app);
 
-		////////////////////////////////////////////
-		///////////BennettS.github.io
+group.position.y = -5; // the group inside the parent group s set as the negative center
+
+// loop
+new WHS.Loop(() => {
+				grandGroup.rotation.y -= 0.002;
+				var MathSinI=1;
+				if(grandGroup.rotation.z >= 0.1 || grandGroup.rotation.z <= -0.1){ MathSinI *= -1; };
+				grandGroup.rotation.z -= MathSinI*0.001;
+}).start(app);
+
+// lights
+new WHS.AmbientLight({
+  light: {
+    intensity: 0.3
+  }
+}).addTo(app);
+
+new WHS.PointLight({
+  position: [10, 10, 10]
+}).addTo(app);
+		///////////////////////////////////////
+		///////////////////////////////////////
+		///////////////////////////////////////
+		///////////////////////////////////////
+		///////////////////////////////////////
 
 		var GalaxyDistance = 1000;
 		var GalaxyDistanceDelta = 900;
@@ -154,8 +159,9 @@
 
 		};
 		GalaxyRender();
-		// Start the app
-		app.start();
+// Start the app
+app.start();
+
 	</script>
 </body>
 </html>
