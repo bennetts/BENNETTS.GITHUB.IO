@@ -1,17 +1,16 @@
 function bsky() {
-    
 /*
 '`'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     Render the Galaxy
 '``///////////////////////////////////////////////////////////////
 */
 
-    var GalaxyScene = new THREE.Scene();
-    var ViewPort = new THREE.PerspectiveCamera(155, window.innerWidth / window.innerHeight, 0.1, 10000);
+var renderer = new THREE.WebGLRenderer();
 
-    var renderer = new THREE.WebGLRenderer();
+    var sceneGalaxySkybox = new THREE.Scene();
+    var cameraGalaxySkybox = new THREE.PerspectiveCamera(155, window.innerWidth / window.innerHeight, 0.1, 10000);
 
-    var GalaxyCubeGeometry = new THREE.CubeGeometry(3000, 3000, 3000);
+    var cubeGalaxySkybox = new THREE.CubeGeometry(3000, 3000, 3000);
 
     var GalaxyCubeMaterial = [
         new THREE.MeshBasicMaterial({
@@ -38,7 +37,7 @@ function bsky() {
     var circmaterial = new THREE.MeshBasicMaterial( { color: 0xffffff } );
     var GalaxySphere = new THREE.Mesh( circgeometry, circmaterial );
 
-    var GalaxyCube = new THREE.Mesh(GalaxyCubeGeometry, GalaxyCubeMaterial);
+    var GalaxyCube = new THREE.Mesh(cubeGalaxySkybox, GalaxyCubeMaterial);
 
 /*
 '`'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -58,12 +57,12 @@ function bsky() {
             var width = window.innerWidth;
             var height = window.innerHeight;
             renderer.setSize(width, height);
-            ViewPort.aspect = width / height;
-            ViewPort.updateProjectionMatrix();
+            cameraGalaxySkybox.aspect = width / height;
+            cameraGalaxySkybox.updateProjectionMatrix();
         });
-
-        GalaxyScene.add( GalaxySphere );
-        GalaxyScene.add(  GalaxyCube  );
+        
+        sceneGalaxySkybox.add( GalaxySphere );
+        sceneGalaxySkybox.add(  GalaxyCube  );
 
     };
 
@@ -81,7 +80,7 @@ function bsky() {
       mousex = e.pageX;
       mousey = e.pageY;
 
-      if((mousex>(window.innerWidth/2-(_EffectDiameter/2))&&mousex<(window.innerWidth/2+(_EffectDiameter/2)))&&(mousey>(window.innerHeight/2-(_EffectDiameter/2))&&mousey<(window.innerHeight/2+(_EffectDiameter/2))))
+      /*if((mousex>(window.innerWidth/2-(_EffectDiameter/2))&&mousex<(window.innerWidth/2+(_EffectDiameter/2)))&&(mousey>(window.innerHeight/2-(_EffectDiameter/2))&&mousey<(window.innerHeight/2+(_EffectDiameter/2))))
       {
             _mouseDistance = Math.sqrt(Math.pow((mousex-(window.innerWidth/2)),2)+Math.pow((mousey-(window.innerHeight/2)),2));
 
@@ -89,10 +88,10 @@ function bsky() {
       } else {
 
               ViewPort.fov = 150;
-      }
+      }*/
 
 
-      ViewPort.updateProjectionMatrix();
+      cameraGalaxySkybox.updateProjectionMatrix();
     };
 
     var ThreejsGalaxyUpdate = function () {
@@ -104,13 +103,13 @@ function bsky() {
             case 0:
                 break;
             case 1:
-                renderer.render(GalaxyScene, ViewPort);
+                renderer.render(sceneGalaxySkybox, cameraGalaxySkybox);
                 break;
             case 2:
-                renderer.render(GalaxyScene, ViewPort);
+                renderer.render(sceneGalaxySkybox, cameraGalaxySkybox);
                 break;
             default:
-                renderer.render(GalaxyScene, ViewPort);
+                renderer.render(sceneGalaxySkybox, cameraGalaxySkybox);
                 break;
         }
     };

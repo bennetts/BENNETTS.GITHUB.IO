@@ -1,3 +1,30 @@
+
+///////////////////////////////// \///////////////////////////////\
+//////////////////////////////// | \/\__///////////////////////////\
+///////////////////////////////\ \¯¯\/\ \///////////////////////////\
+////////////////////////////////\ \   /\ \_____//////////////////////\
+///////////////////////////////| | |   \\ \__  |_/////////////////////\
+/////////////////////////////// \  /_/\_\\___|___|//BennettS.github.io/\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function Button(name, index) {
     var _name = name;
     var _index = index;
@@ -10,9 +37,9 @@ function Button(name, index) {
 		  }
     };
 
-    this.update = function(x,y, spacing) {
+    this.update = function(x,y, navwidth) {
         $(_name).css({top:y});
-				$(_name).css({left:(x+(spacing*(_index+1)))});
+        $(_name).css({left:(x+(navwidth))});
     };
 }
 
@@ -23,8 +50,7 @@ function Navbar(nname, ntrack, nruler, nright) {
 
   ////////////////////////////////////
     //////////////////////////////////////
-
-        var _buttonspacing = 90;
+        var _buttonspacing = 120;
         var _buttonwidth = 64;
         var _trackerwidth = 94;
         var _debg = 0;
@@ -52,7 +78,7 @@ function Navbar(nname, ntrack, nruler, nright) {
 
 
 
-    var _index = [];  //holds all button divs
+  var _index = [];  //holds all button divs
   var _name = nname; //the navbar div
   var _track = ntrack; //the tracker div (that little thing under the navbar)
   var _bright = nright; //the thing on the bottom right of the navbar
@@ -120,7 +146,7 @@ function Navbar(nname, ntrack, nruler, nright) {
       _left = this.navleft(_pagewidth, _nwidth);
 
       for(var i = 0; i<_length; i++) {
-          _index[i].update(_left, _top, _buttonspacing);
+          _index[i].update(_left, _top, _buttonspacing, _nwidth);
       }
 
       $(_bright).css({left:(_left+_nwidth-$(_bright).width()),top:(_top+_nheight),height:(_pageheight-50-_top-_nheight)});

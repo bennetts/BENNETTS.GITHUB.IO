@@ -1,4 +1,30 @@
 
+///////////////////////////////// \///////////////////////////////\
+//////////////////////////////// | \/\__///////////////////////////\
+///////////////////////////////\ \¯¯\/\ \///////////////////////////\
+////////////////////////////////\ \   /\ \_____//////////////////////\
+///////////////////////////////| | |   \\ \__  |_/////////////////////\
+/////////////////////////////// \  /_/\_\\___|___|//BennettS.github.io/\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function Widget(_o, _cl, _up) {
   var o = _o;
   var aclick = _cl;
@@ -37,10 +63,10 @@ function Barchitect(nruler) {
 		}
   };
 
+  //TODO:Add a click() function that traverses 2d space, updating only the widgets in some optimized subset
   this._click = function(e) {
 		for(var i = 0; i<_length; i++) {
 			_index[i]._click(e);
 		}
   }
-  //TODO:Add a click() function that traverses 2d space
 }
