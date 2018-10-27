@@ -49,6 +49,7 @@ function Navbar(nname, ntrack, nruler, nright) {
 
 
   ////////////////////////////////////
+            //Config
     //////////////////////////////////////
         var _buttonspacing = 120;
         var _buttonwidth = 64;
@@ -56,6 +57,7 @@ function Navbar(nname, ntrack, nruler, nright) {
         var _debg = 0;
         var _length = 0;  //number of buttons
         var _ruleroffset = 0;
+        var _curselect = 0;  //which button is currently selected
 
 
               //Define how far to the right you want the navbar
@@ -77,6 +79,9 @@ function Navbar(nname, ntrack, nruler, nright) {
 
 
 
+  ////////////////////////////////////
+            //constructor
+    //////////////////////////////////////
 
   var _index = [];  //holds all button divs
   var _name = nname; //the navbar div
@@ -92,7 +97,14 @@ function Navbar(nname, ntrack, nruler, nright) {
   var _left = 0;
   var _top = 0;
 
-  var _curselect = 0;  //which button is currently selected
+              ///////////////////////////
+                        //2.0
+              //////////////////////////
+                var _slots = 0;
+                var _spacing = 0;
+
+  //////////////////////////////////////
+////////////////////////////////////
 
 
 	this._draw = function(selection) {
