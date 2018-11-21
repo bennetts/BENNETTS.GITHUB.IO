@@ -68,12 +68,10 @@ function bsky() {
 
       if((mousex>(window.innerWidth/2-(_EffectDiameter/2))&&mousex<(window.innerWidth/2+(_EffectDiameter/2)))&&(mousey>(window.innerHeight/2-(_EffectDiameter/2))&&mousey<(window.innerHeight/2+(_EffectDiameter/2))))
       {
-            _mouseDistance = Math.sqrt(Math.pow((mousex-(window.innerWidth/2)),2)+Math.pow((mousey-(window.innerHeight/2)),2));
-
-            camera.fov = 150 + Math.min(19, 3*(_EffectDiameter/2)/_mouseDistance);
+            camera.fov = 150;
       } else {
 
-              camera.fov = 90;
+              camera.fov = 150;
       }
 
 
