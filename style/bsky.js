@@ -101,6 +101,7 @@ var renderer = new THREE.WebGLRenderer();
     var ThreejsGalaxyRender = function (curselect) {
         switch(curselect){
             case 0:
+                renderer.render(GalaxyScene, ViewPort);
                 break;
             case 1:
                 renderer.render(sceneGalaxySkybox, cameraGalaxySkybox);

@@ -48,6 +48,7 @@ barcher.addWidget(blogo, blogo._click, blogo._update);
 barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update);
 barcher.addWidget(babout, babout._click, babout._update);
 
+var sky = new bsky();
 
 /*88888888888888888888888888888*/
 
@@ -55,20 +56,8 @@ function windowChange() {
 
 	barcher.update();
 
-	if(bnavbar.skyCurSelect!=0) {  
-		sky._updateScreenSize();
-	};
+	sky._updateScreenSize();
 
-};
-
-var sky = new bsky();
-var skyInitiated = 0;
-function initiateSky() {
-	if(skyInitiated==0){
-		skyInitiated=1;  
-		sky.bcreate();
-		sky.loop();
-	};
 };
 
 $(document).ready(function()
@@ -78,13 +67,13 @@ $(document).ready(function()
 		barcher._click(e);
 	});
 
+    sky.bcreate();
+    sky.loop();
+
+
   $(document).mousemove(function(e) {
 		bnavbar._mousemove(e);
-		
-		if(bnavbar.skyCurSelect()!=0) { 
-			initiateSky();
-			sky._updateMousePosition(e);  
-		};
+		sky._updateMousePosition(e);
   });
 
 
@@ -92,7 +81,7 @@ $(document).ready(function()
 	  //Update the Sky
 	  /////////////////////////////////////////
     setInterval(function(){
-		if(bnavbar.skyCurSelect()!=0) {  sky.loop(bnavbar.skyCurSelect());  };
+		sky.loop(bnavbar.skyCurSelect()); 
 	},50);
 
 	windowChange();
