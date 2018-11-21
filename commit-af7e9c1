@@ -1,0 +1,471 @@
+From af7e9c1b5bb74041ee9858ab22a4cfcecf42b089 Mon Sep 17 00:00:00 2001
+From: BennettS <bennett.scarff@gmail.com>
+Date: Mon, 2 Apr 2018 19:37:08 -0700
+Subject: Added Effects
+
+Added Effects
+
+diff --git a/img/skybox/bottom.jpg b/img/skybox/bottom.jpg
+new file mode 100644
+index 0000000..25f9929
+Binary files /dev/null and b/img/skybox/bottom.jpg differ
+diff --git a/img/skybox/front.jpg b/img/skybox/front.jpg
+index c7b5719..d04dc30 100644
+Binary files a/img/skybox/front.jpg and b/img/skybox/front.jpg differ
+diff --git a/img/skybox/r1.jpg b/img/skybox/r1.jpg
+index c43282a..25287e1 100644
+Binary files a/img/skybox/r1.jpg and b/img/skybox/r1.jpg differ
+diff --git a/index.html b/index.html
+index 5a87a90..36f1738 100644
+--- a/index.html
++++ b/index.html
+@@ -15,10 +15,10 @@
+ 
+ </head>
+ <body>
+-
+-  <div id="blogo"><img src="img/hixel.png"/></div>
++  <div id="wsffoot"></div>
+ 
+ 
++  <div id="blogo"><img src="img/hixel.png"/></div>
+ 
+ 
+ 	<div id="wsbnav"></div>
+@@ -26,19 +26,7 @@
+ 			<div id="wsbwad" 	class="wsbtn"></div>
+ 			<div id="wsbghub" class="wsbtn"></div>
+ 			<div id="wsselb"></div>
+-
+-	<div id="wsfield">
+-			<h1>Welcome to my website!</h1><br>
+-			<p>
+-			I designed this page in JavaScript to display some of my abilities with the language:<br><br>
+-
+-				&nbsp;&nbsp;&nbsp;&nbsp;[ ■ This page is responsive]<br>
+-				&nbsp;&nbsp;&nbsp;&nbsp;[ ■ The background image is a cubemap using threejs.]<br>
+-				&nbsp;&nbsp;&nbsp;&nbsp;[ ■ The navbar is written in jquery/javascript.]<br>
+-				&nbsp;&nbsp;&nbsp;&nbsp;[ ■ Object and event handler "barchitect": Updates the div elements on the screen, written in jquery.]<br>
+-				&nbsp;&nbsp;&nbsp;&nbsp;[ ■ This page works on all modern browsers.]
+-			</p>
+-	</div>
++			<div id="wsright"></div>
+ 
+ <div id="wsfoot">about me</div>
+ 
+diff --git a/style/barch/barch.js b/style/barch/barch.js
+index 2c52233..15e5984 100644
+--- a/style/barch/barch.js
++++ b/style/barch/barch.js
+@@ -1,9 +1,8 @@
+ 
+-function Widget(_o, _cl, _up, _hi) {
++function Widget(_o, _cl, _up) {
+   var o = _o;
+   var aclick = _cl;
+   var aupdate = _up;
+-  var hi = _hi;
+ 
+   this._click = function(e) {
+     aclick.call(o,e);
+@@ -12,19 +11,18 @@ function Widget(_o, _cl, _up, _hi) {
+   this._update = function() {
+     aupdate.call(o);
+   };
+-
+-  this._hide = function(c) {
+-    hi.call(o,c);
+-  };
+ }
+ 
+ function Barchitect(nruler) {
+   var _index = []; //array of widgets
+   var _length = 0;
++
+   var _ruler = nruler; //the page size div
++  var _curselect = 0;  //which button is currently selected
+ 
+-  this.addWidget = function(io,jc,iu,hi) {
+-  	_index.push(new Widget(io,jc,iu,hi));
++
++  this.addWidget = function(io,jc,iu) {
++  	_index.push(new Widget(io,jc,iu));
+ 
+   	_length+=1;
+ 	};
+@@ -43,12 +41,6 @@ function Barchitect(nruler) {
+ 		for(var i = 0; i<_length; i++) {
+ 			_index[i]._click(e);
+ 		}
+-  };
+-
+-  this.changestate = function(c) {
+-		for(var i = 0; i<_length; i++) {
+-			_index[i]._hide(c);
+-		}
+-  };
++  }
+   //TODO:Add a click() function that traverses 2d space
+ }
+diff --git a/style/barch/blogo.js b/style/barch/blogo.js
+index 704155b..9a45a09 100644
+--- a/style/barch/blogo.js
++++ b/style/barch/blogo.js
+@@ -1,8 +1,6 @@
+ function BaseWidget(nname, nruler) {
+     ////////////////////////////////////
+     //////////////////////////////////////
+-    var _name = nname;
+-    var L_ruler = nruler;
+     var _Lruleroffset = 0;
+ 
+ 
+@@ -15,35 +13,22 @@ function BaseWidget(nname, nruler) {
+     this.navtop = function() {
+         return 300;
+     };
+-
+-    this.navwidth = function() {
+-        return $(_name).width();
+-    };
+-
+-    this.navheight = function() {
+-        return $(_name).height();
+-    };
+     //////////////////////////////////////
+     ////////////////////////////////////
+ 
++    var _name = nname;
++    var L_ruler = nruler;
+     var _left = 0;
+     var _top = 0;
+-    var _width = 0;
+-    var _height = 0;
+ 
+     this._update = function() {
+         _Lruleroffset = $(L_ruler).offset();
+         _left = this.navleft();
+         _top = this.navtop();
+-        _width = this.navwidth();
+-        _height = this.navheight();
+-        $(_name).css({left:_left,top:_top,width:_width,height:_height});
++        $(_name).css({left:_left,top:_top});
+     };
+ 
+     this._click = function(e) {
+ 
+     };
+-
+-    this._hide = function(c) {
+-    };
+-}
++}
+\ No newline at end of file
+diff --git a/style/bnav/bnavbar.css b/style/bnav/bnavbar.css
+index 33028cd..3d96889 100644
+--- a/style/bnav/bnavbar.css
++++ b/style/bnav/bnavbar.css
+@@ -6,7 +6,6 @@
+ 	z-index:-1;
+ 	border-radius:20px;
+ 	border-bottom-right-radius: 0px;
+-	border-bottom-left-radius: 0px;
+ 	background-color:#0606EC;
+ 	zoom: 1;
+ 	filter: alpha(opacity=85);
+@@ -27,7 +26,7 @@
+   position:absolute;
+   height:128px;
+   width:64px;
+-  z-index:1;
++  z-index:3;
+     background-position:-64px 0px;
+ }
+ 
+@@ -38,7 +37,7 @@
+ 
+ #wsselb {
+   position:absolute;
+-  z-index:3;
++  z-index:-1;
+   height:12px;
+   width:94px;
+   background:url("./img/mselb.png");
+diff --git a/style/bnav/bnavbar.js b/style/bnav/bnavbar.js
+index 2739b0c..b9b8452 100644
+--- a/style/bnav/bnavbar.js
++++ b/style/bnav/bnavbar.js
+@@ -17,7 +17,7 @@ function Button(name, index) {
+ }
+ 
+ 
+-function Navbar(nname, ntrack, nruler, narch, narch_cb) {
++function Navbar(nname, ntrack, nruler, nright) {
+ 
+ 
+ 
+@@ -42,7 +42,7 @@ function Navbar(nname, ntrack, nruler, narch, narch_cb) {
+               //define how far down you want the navbar
+               this.navtop = function(pheight, nheight) {
+                   if(_debg>0) _debg = pheight+nheight;
+-                return 75;
++                return 50;
+               };
+ 
+         //////////////////////////////////////
+@@ -50,12 +50,12 @@ function Navbar(nname, ntrack, nruler, narch, narch_cb) {
+ 
+ 
+ 
+-  var arch = narch;
+-  var arch_cb = narch_cb;
+ 
+-  var _index = [];  //holds all button divs
++
++    var _index = [];  //holds all button divs
+   var _name = nname; //the navbar div
+   var _track = ntrack; //the tracker div (that little thing under the navbar)
++  var _bright = nright; //the thing on the bottom right of the navbar
+ 
+   var _nwidth = 0;
+   var _nheight = 0;
+@@ -123,24 +123,18 @@ function Navbar(nname, ntrack, nruler, narch, narch_cb) {
+           _index[i].update(_left, _top, _buttonspacing);
+       }
+ 
++      $(_bright).css({left:(_left+_nwidth-$(_bright).width()),top:(_top+_nheight),height:(_pageheight-50-_top-_nheight)});
+       $(_name).css({left:_left,top:_top});
+ 
+       $(_track).css({left: _left + _buttonspacing * (_curselect + 1) - ((_trackerwidth-_buttonwidth)/2), top:(_top+_nheight)});
+ 
+-      arch_cb.call(arch,_curselect);
+   };
+ 
+   this._click = function(e) {
+       if(e.pageX>(_left+_buttonspacing) && e.pageX<(_left+(_buttonspacing*(_length+1))) && e.pageY<(_nheight+_top) && e.pageY>_top)
+       {
+-    		_curselect = Math.floor((e.pageX-this.navleft(_pagewidth, _nwidth))/_buttonspacing)-1;
+-    		if(_curselect>_length){_curselect=_length;}
+-
+-        arch_cb.call(arch,_curselect);
++  		_curselect = Math.floor((e.pageX-this.navleft(_pagewidth, _nwidth))/_buttonspacing)-1;
++  		if(_curselect>_length){_curselect=_length;}
+       }
+   };
+-
+-  this._hide = function(c) {
+-
+-  };
+ }
+diff --git a/style/bsky.js b/style/bsky.js
+index b00f5d5..ec43c5d 100644
+--- a/style/bsky.js
++++ b/style/bsky.js
+@@ -19,7 +19,10 @@ function bsky() {
+             map: new THREE.TextureLoader().load("img/skybox/top.jpg"),
+             side: THREE.DoubleSide
+         }),
+-        0,
++        new THREE.MeshBasicMaterial({
++            map: new THREE.TextureLoader().load("img/skybox/bottom.jpg"),
++            side: THREE.DoubleSide
++        }),
+         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("img/skybox/r1.jpg"), side: THREE.DoubleSide}),
+         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("img/skybox/r2.jpg"), side: THREE.DoubleSide})
+     ];
+@@ -51,16 +54,39 @@ function bsky() {
+ 
+     var o;
+ 
++
++    this._updateScreenSize = function () {
++        _EffectDiameter = window.innerWidth/7;
++    };
++
++        var _EffectRadius;
++        var _mouseDistance;
++
++    this._updateMousePosition = function (e) {
++      mousex = e.pageX;
++      mousey = e.pageY;
++
++      if((mousex>(window.innerWidth/2-(_EffectDiameter/2))&&mousex<(window.innerWidth/2+(_EffectDiameter/2)))&&(mousey>(window.innerHeight/2-(_EffectDiameter/2))&&mousey<(window.innerHeight/2+(_EffectDiameter/2))))
++      {
++            _mouseDistance = Math.sqrt(Math.pow((mousex-(window.innerWidth/2)),2)+Math.pow((mousey-(window.innerHeight/2)),2));
++
++            camera.fov = 150 + Math.min(19, 3*(_EffectDiameter/2)/_mouseDistance);
++      } else {
++
++              camera.fov = 90;
++      }
++
++
++      camera.updateProjectionMatrix();
++    };
++
+     var update = function () {
+         cube.rotation.y += 0.0015;
+     };
+ 
+     var render = function () {
+-
+         renderer.render(scene, camera);
+-        camera.position.y = -1000;
+-        camera.position.z = 1000;
+-        camera.rotation.x = .3;
++
+     };
+ 
+     this.loop = function () {
+diff --git a/style/home.css b/style/home.css
+index d854183..6c18e84 100644
+--- a/style/home.css
++++ b/style/home.css
+@@ -1,19 +1,4 @@
+ /* General CSS */
+-p {
+-	margin:15px;
+-}
+-h1 {
+-	margin:15px;
+-}
+-#wsfield {
+-    overflow: scroll;
+-	position:absolute;
+-	background-color:#FFFFFF;
+-	border:5px solid #4C05F2;
+-	border-radius:10px;
+-	border-color:#4C05F2;
+-	margin:0;
+-}
+ 
+ * { margin: 0; padding: 0;  }
+ 
+@@ -35,4 +20,4 @@ body {
+ 	height:100%;
+ 	position:absolute;
+ 	visibility:hidden;
+-}
++}
+\ No newline at end of file
+diff --git a/style/home.js b/style/home.js
+index 3022877..6575de5 100644
+--- a/style/home.js
++++ b/style/home.js
+@@ -1,14 +1,10 @@
+-
++var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule", "#wsright");
++	bnavbar._addbutton("#wsbhome");
++	bnavbar._addbutton("#wsbwad");
++	bnavbar._addbutton("#wsbghub");
+ 
+ var blogo = new BaseWidget("#blogo", "#rule");
+ var babout = new BaseWidget("#wsfoot", "#rule");
+-var bfield = new BaseWidget("#wsfield", "#rule");
+-
+-
+-
+-babout.navleft = function() {
+-	return $("#rule").offset().left-20;
+-};
+ 
+ blogo.navtop = function() {
+ 	return 50;
+@@ -18,48 +14,12 @@ babout.navtop = function() {
+ 	return $("#rule").height()-$("#wsfoot").height()-50;
+ };
+ 
+-bfield.navtop = function() {
+-	return 50+120;
+-};
+-
+-bfield.navwidth = function() {
+-	return $("#rule").width()-10;
+-};
+-
+-bfield.navheight = function() {
+-	var _i = $("#rule").height();
+-	var _j = $("#wsfoot").height();
+-	var _k = 75;
+-	return (_i-_j-(_k+190));
+-};
+-
+-
+-bfield._hide = function(c) {
+-	if(c===0)$("#wsfield").show();
+-	else $("#wsfield").hide();
+-};
+-
+-blogo._hide = function(c) {
+-	if(c===1)$("#blogo").hide();
+-	else $("#blogo").show();
+-};
+-
+-babout._hide = function(c) {
+-	if(c===1)$("#wsfoot").hide();
+-	else $("#wsfoot").show();
+-};
+ 
+ var barcher = new Barchitect("#rule");
+ 
+-var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule", barcher, barcher.changestate);
+-		bnavbar._addbutton("#wsbhome");
+-		bnavbar._addbutton("#wsbwad");
+-		bnavbar._addbutton("#wsbghub");
+-
+-		barcher.addWidget(blogo, blogo._click, blogo._update, blogo._hide);
+-		barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update, bnavbar._hide);
+-		barcher.addWidget(babout, babout._click, babout._update, babout._hide);
+-		barcher.addWidget(bfield, bfield._click, bfield._update, bfield._hide);
++barcher.addWidget(blogo, blogo._click, blogo._update);
++barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update);
++barcher.addWidget(babout, babout._click, babout._update);
+ 
+ var sky = new bsky();
+ 
+@@ -69,7 +29,10 @@ function windowChange() {
+ 
+ 	barcher.update();
+ 
+-}
++	sky._updateScreenSize();
++
++};
++
+ $(document).ready(function()
+ {
+ 
+@@ -77,13 +40,15 @@ $(document).ready(function()
+ 		barcher._click(e);
+ 	});
+ 
++    sky.bcreate();
++    sky.loop();
++
++
+   $(document).mousemove(function(e) {
+ 		bnavbar._mousemove(e);
++		sky._updateMousePosition(e);
+   });
+ 
+-    sky.bcreate();
+-    sky.loop();
+-
+     setInterval(function(){sky.loop()},50);
+ 
+ 	windowChange();
+diff --git a/style/ws.css b/style/ws.css
+index 1ec8e40..85b3501 100644
+--- a/style/ws.css
++++ b/style/ws.css
+@@ -19,10 +19,6 @@
+ 	opacity: 0.65;
+ }
+ 
+-#wsfield {
+-	z-index:-1;
+-}
+-
+ #wsinav {
+   margin-top:50px;
+ }
