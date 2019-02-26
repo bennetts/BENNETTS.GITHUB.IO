@@ -6,11 +6,18 @@ var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule", "#wsright");
 var blogo = new BaseWidget("#blogo", "#rule");
 var babout = new BaseWidget("#wsfoot", "#rule");
 
+//DELET
+var bDEMOCOVER = new BaseWidget("#democover", "#rule");
+
 blogo.navtop = function() {
 	return 50;
 };
 
 babout.navtop = function() {
+	return $("#rule").height()-$("#wsfoot").height()-50;
+};
+
+bDEMOCOVER.navtop = function() {
 	return $("#rule").height()-$("#wsfoot").height()-50;
 };
 
@@ -20,6 +27,7 @@ var barcher = new Barchitect("#rule");
 barcher.addWidget(blogo, blogo._click, blogo._update);
 barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update);
 barcher.addWidget(babout, babout._click, babout._update);
+barcher.addWidget(bDEMOCOVER, bDEMOCOVER._click, bDEMOCOVER._update);
 
 var sky = new bsky();
 

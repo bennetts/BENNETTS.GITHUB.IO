@@ -10,6 +10,18 @@
 	background-color:#4c05f2;
 }
 
+#democover {
+	position: absolute;
+	left:0px;
+	border:5px;
+	border-right: 20px;
+	border-left: 20px;
+	border-style: solid;
+	border-color: #555555;
+	margin-left:20px;
+	background-color:#555555;
+}
+
 #wsright {
 	position: absolute;
 	width: 15px;
