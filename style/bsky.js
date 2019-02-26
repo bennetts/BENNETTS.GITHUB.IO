@@ -4,14 +4,11 @@ function DemoScene(DemoCamera,DCU) {
         
         var DemoScene = new THREE.Scene();
         var DemoSphereMemory = [];
-        var DemoSphericalMemory = [];
         var DemoSphereGroup = new THREE.Object3D();
         var DemoSphereGroupController = new THREE.Object3D();
         var DemoLights = [];
         var elapsedTime = 0;
         var TotalSpheres = 512;
-        var DemoSphericalMemoryUnitDimensions = TotalSpheres/Math.PI;
-        var DemoSphericalMemoryUnitController = new THREE.Object3D();
         var DemoRadius =8;
         var S1Done = false;
         var S7Done = false;
@@ -44,7 +41,6 @@ function DemoScene(DemoCamera,DCU) {
 
             DemoSphereGroupController.add(DemoSphereGroup);
             DemoScene.add( DemoSphereGroupController );
-            DemoScene.add( DemoSphericalMemoryUnitController );
             setInterval(function () {
                 elapsedTime+=0.1;
             }, 100);
@@ -102,14 +98,16 @@ function DemoScene(DemoCamera,DCU) {
             for(i = 0; i < DemoSphereMemory.length; i++) {
                 DemoSphereMemory[i].scale.set(.1*step,.1*step,.1*step);
             };
+            var step2 = (elapsedTime-11)/3;
+            if(step2<1){
+                FSA = 45*step2;
+            };
+            DemoCamera.fov=90-FSA;
+            DemoCamera.updateProjectionMatrix();
     };
 
     this.StageSix = function() {
-        step = (elapsedTime-14)/3;
-        if(step<1){
-            FSA = 45*step;
-        };
-        DemoCamera.fov=90-FSA;
+        DemoCamera.fov=45;
         DemoCamera.updateProjectionMatrix();
     };
 
@@ -117,10 +115,7 @@ function DemoScene(DemoCamera,DCU) {
         DemoCamera.fov=45;
         DemoCamera.updateProjectionMatrix();
         if(S7Done==false){
-            for(i=0;i<DemoSphericalMemoryUnitController.length;i++){
-                DemoSphericalMemoryUnitController[i].rotation.x =2*Math.PI*(i/DemoSphericalMemoryUnitDimensions);
-            };
-    };
+        };
         S7Done=true;
     };
 
