@@ -14,7 +14,7 @@ function Button(name, index) {
         $(_name).css({top:y});
 				$(_name).css({left:(x+(spacing*(_index+1)))});
     };
-}
+};
 
 
 function Navbar(nname, ntrack, nruler, nright) {
@@ -52,7 +52,7 @@ function Navbar(nname, ntrack, nruler, nright) {
 
 
 
-    var _index = [];  //holds all button divs
+  var _index = [];  //holds all button divs
   var _name = nname; //the navbar div
   var _track = ntrack; //the tracker div (that little thing under the navbar)
   var _bright = nright; //the thing on the bottom right of the navbar
@@ -137,4 +137,4 @@ function Navbar(nname, ntrack, nruler, nright) {
   		if(_curselect>_length){_curselect=_length;}
       }
   };
-}
+};
