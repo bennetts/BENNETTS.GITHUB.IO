@@ -8,7 +8,7 @@ function DemoScene(DemoCamera,DCU) {
         var DemoSphereGroupController = new THREE.Object3D();
         var DemoLights = [];
         var elapsedTime = 0;
-        var TotalSpheres = 512;
+        var TotalSpheres = 1024;
         var DemoRadius =8;
         var S1Done = false;
         var S7Done = false;
@@ -79,11 +79,39 @@ function DemoScene(DemoCamera,DCU) {
         DemoSphereGroup.position.x = DemoRadius*step;
     };
 
+    
+    var N = Math.sqrt(TotalSpheres);
+    var S3Done = false;
+    var DemoSphereGroupSMem = [];
+    var DemoSphereGroupSAtomic = [];
     this.StageThree = function() {
-        DemoCamera.target=DemoSphereMemory[0].position;
+        if(S3Done==false) {
+            for(i=0; i<N; i++)
+            {
+                DemoSphereGroupSAtomic.push(new THREE.Object3D());
+                DemoSphereGroupSMem.push(new THREE.Object3D());
+                for(j=0;j<N;j++)
+                {
+                    if((N*j+i)<DemoSphereMemory.length)
+                    {
+                        DemoSphereGroupSAtomic[i].add(DemoSphereMemory[i+(N*j)]);
+                    };
+                };
+
+                DemoSphereGroupSAtomic[i].position.x = DemoRadius;
+
+                DemoSphereGroupSMem[i].add(DemoSphereGroupSAtomic[i]);
+                DemoScene.add(DemoSphereGroupSMem[i]);
+            };
+            S3Done=true;
+        };
 
         step = (elapsedTime-6)/2;
-        DemoSphereGroup.rotation.x = Math.PI*step;
+        
+        for(i=0; i<N; i++)
+        {
+            DemoSphereGroupSMem[i].rotation.z = i*step;
+        };
     };
 
     this.StageFour = function() {
@@ -94,11 +122,11 @@ function DemoScene(DemoCamera,DCU) {
 
     this.StageFive = function() {
 
-        step = 1/(elapsedTime-11);
+        step = 1/(elapsedTime-8);
             for(i = 0; i < DemoSphereMemory.length; i++) {
                 DemoSphereMemory[i].scale.set(.1*step,.1*step,.1*step);
             };
-            var step2 = (elapsedTime-11)/3;
+            var step2 = (elapsedTime-8)/3;
             if(step2<1){
                 FSA = 45*step2;
             };
@@ -120,6 +148,9 @@ function DemoScene(DemoCamera,DCU) {
     };
 
     this.FinalStage = function() {
+        for(i=0;i<N;i++){
+            DemoSphereGroupSMem[i].rotation.z+=1;
+        }
         DemoCamera.fov=45;
         DemoCamera.updateProjectionMatrix();
     };
@@ -156,13 +187,7 @@ function DemoScene(DemoCamera,DCU) {
             }else if(elapsedTime <=8){
                 this.StageThree();
             }else if(elapsedTime<=11){
-                this.StageFour();
-            }else if(elapsedTime<=14){
                 this.StageFive();
-            }else if(elapsedTime<=17){
-                this.StageSix();
-            }else if(elapsedTime<=20){
-                this.StageSeven();
             }else {
                 this.FinalStage();
             }
