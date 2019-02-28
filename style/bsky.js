@@ -29,11 +29,28 @@ function DemoScene(DemoCamera,DCU) {
                 DemoScene.add( DemoLights[ 1 ] );
                 DemoScene.add( DemoLights[ 2 ] );
 
-            var circmaterial = new THREE.MeshLambertMaterial( {color: 0x903090 } );
+
+                var startColor = 0xDF4023;
+                var endColor = 0xFFFFFF;
+                var startRed = (startColor >> 16) & 0xDF;
+                var startGreen = (startColor >> 8) & 0x40;
+                var startBlue = startColor & 0x23;
+                var endRed = (endColor >> 16) & 0xE4;
+                var endGreen = (endColor >> 8) & 0xC1;
+                var endBlue = endColor & 0x03;
+                var steps = TotalSpheres;
+
             var circgeometry = new THREE.SphereGeometry(3, 32, 32);
 
 
                 for(i = 0; i < TotalSpheres; i++) {
+                    var newRed = ((steps - 1 - i) * startRed + i * endRed) / (steps - 1);
+                    var newGreen = ((steps - 1 - i) * startGreen + i * endGreen) / (steps - 1);
+                    var newBlue = ((steps - 1 - i) * startBlue + i * endBlue) / (steps - 1);
+                    var comb = newRed << 16 | newGreen << 8 | newBlue;
+
+                    var circmaterial = new THREE.MeshLambertMaterial( {color: comb } );
+
                     var DemoSphereA = new THREE.Mesh( circgeometry, circmaterial );
                         DemoSphereMemory.push(DemoSphereA);
                         DemoSphereGroup.add(DemoSphereA);
