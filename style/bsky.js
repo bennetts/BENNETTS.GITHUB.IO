@@ -17,9 +17,9 @@ function DemoScene(DemoCamera,DCU) {
         var i = 0;
 
     this.InitiateDemo = function() {
-                DemoLights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-                DemoLights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-                DemoLights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+                DemoLights[ 0 ] = new THREE.PointLight( 0xffffff, 2, 0 );
+                DemoLights[ 1 ] = new THREE.PointLight( 0xffffff, 2, 0 );
+                DemoLights[ 2 ] = new THREE.PointLight( 0xffffff, 2, 0 );
 
                 DemoLights[ 0 ].position.set( 0, 200, 0 );
                 DemoLights[ 1 ].position.set( 100, 200, 100 );
@@ -30,14 +30,14 @@ function DemoScene(DemoCamera,DCU) {
                 DemoScene.add( DemoLights[ 2 ] );
 
 
-                var startColor = 0xDF4023;
-                var endColor = 0xFFFFFF;
-                var startRed = (startColor >> 16) & 0xDF;
-                var startGreen = (startColor >> 8) & 0x40;
-                var startBlue = startColor & 0x23;
-                var endRed = (endColor >> 16) & 0xE4;
-                var endGreen = (endColor >> 8) & 0xC1;
-                var endBlue = endColor & 0x03;
+                var startColor = 0x320F43;
+                var endColor = 0xA16943;
+                var startRed = (startColor >> 16) & 0x32;
+                var startGreen = (startColor >> 8) & 0x0F;
+                var startBlue = startColor & 0x43;
+                var endRed = (endColor >> 16) & 0xA1;
+                var endGreen = (endColor >> 8) & 0x69;
+                var endBlue = endColor & 0x43;
                 var steps = TotalSpheres;
 
             var circgeometry = new THREE.SphereGeometry(3, 32, 32);
