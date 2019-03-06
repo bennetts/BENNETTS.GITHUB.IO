@@ -12,7 +12,7 @@ function Button(name, index) {
 
     this.update = function(x,y, spacing) {
         $(_name).css({top:y});
-				$(_name).css({left:(x+(spacing*(_index+1)))});
+				$(_name).css({left:(x+(spacing*(_index)))});
     };
 };
 
@@ -27,7 +27,6 @@ function Navbar(nname, ntrack, nruler, nright) {
         var _buttonspacing = 90;
         var _buttonwidth = 64;
         var _trackerwidth = 94;
-        var _debg = 0;
         var _length = 0;  //number of buttons
         var _ruleroffset = 0;
 
@@ -40,8 +39,7 @@ function Navbar(nname, ntrack, nruler, nright) {
               };
 
               //define how far down you want the navbar
-              this.navtop = function(pheight, nheight) {
-                  if(_debg>0) _debg = pheight+nheight;
+              this.navtop = function() {
                 return 50;
               };
 
@@ -68,6 +66,10 @@ function Navbar(nname, ntrack, nruler, nright) {
 
   var _curselect = 0;  //which button is currently selected
 
+  this._findcenterleft = function() {
+    return (this.navleft(_pagewidth, _nwidth)+16+(_nwidth-(_buttonspacing*_index.length))/2);
+  };
+
 
 	this._draw = function(selection) {
 		for(var i = 0; i<_length; i++) {
@@ -84,17 +86,17 @@ function Navbar(nname, ntrack, nruler, nright) {
 	var _nmodn = 0;
 
   this._mousemove = function(e) {
-        if(e.pageX>(_left+_buttonspacing) && e.pageX<(_left+(_buttonspacing*(_length+1))) && e.pageY<(_nheight+_top) && e.pageY>_top)
+        if(e.pageX>(this._findcenterleft()) && e.pageX<(this._findcenterleft()+(_buttonspacing*(_length))) && e.pageY<(_nheight+_top) && e.pageY>_top)
         {
-            _nmodn = Math.floor((e.pageX-(_left+_buttonspacing))/_buttonspacing);
+            _nmodn = Math.floor((e.pageX-(this._findcenterleft()))/_buttonspacing);
 
               if(_nmodn>_length)    _nmodn=_length;
 
-              $(_track).stop().animate({left:((_left+_buttonspacing)+(_buttonspacing*_nmodn)-((_trackerwidth-_buttonwidth)/2))},0,function(){});
+              $(_track).stop().animate({left:((this._findcenterleft())+(_buttonspacing*_nmodn)-((_trackerwidth-_buttonwidth)/2))},0,function(){});
               this._draw(_nmodn);
               _noob = 1;
         } else if(_noob){
-            $(_track).stop().animate({left:((_left+_buttonspacing)+(_buttonspacing*_curselect)-((_trackerwidth-_buttonwidth)/2))},0,function(){});
+            $(_track).stop().animate({left:((this._findcenterleft())+(_buttonspacing*_curselect)-((_trackerwidth-_buttonwidth)/2))},0,function(){});
             this._draw(_curselect);
             _noob=0;
         }
@@ -114,27 +116,27 @@ function Navbar(nname, ntrack, nruler, nright) {
 
 
       _pageheight = $(_ruler).height();
-      _top = this.navtop(_pageheight, _nheight);
+      _top = this.navtop();
 
       _pagewidth = $(_ruler).width();
       _left = this.navleft(_pagewidth, _nwidth);
 
       for(var i = 0; i<_length; i++) {
-          _index[i].update(_left, _top, _buttonspacing);
+          _index[i].update(this._findcenterleft(), _top, _buttonspacing);
       }
 
       $(_bright).css({left:(_left+_nwidth-$(_bright).width()),top:(_top+_nheight),height:(_pageheight-50-_top-_nheight)});
       $(_name).css({left:_left,top:_top});
 
-      $(_track).css({left: _left + _buttonspacing * (_curselect + 1) - ((_trackerwidth-_buttonwidth)/2), top:(_top+_nheight)});
+      $(_track).css({left: this._findcenterleft() + _buttonspacing * (_curselect) - ((_trackerwidth-_buttonwidth)/2), top:(_top+_nheight)});
 
   };
 
   this._click = function(e) {
-      if(e.pageX>(_left+_buttonspacing) && e.pageX<(_left+(_buttonspacing*(_length+1))) && e.pageY<(_nheight+_top) && e.pageY>_top)
+      if(e.pageX>=(this._findcenterleft()) && e.pageX<(this._findcenterleft()+(_buttonspacing*(_length+1))) && e.pageY<(_nheight+_top) && e.pageY>_top)
       {
-  		_curselect = Math.floor((e.pageX-this.navleft(_pagewidth, _nwidth))/_buttonspacing)-1;
-  		if(_curselect>_length){_curselect=_length;}
+        _curselect = Math.floor((e.pageX-this._findcenterleft())/_buttonspacing);
+        if(_curselect>_length){_curselect=_length;}
       }
   };
 };

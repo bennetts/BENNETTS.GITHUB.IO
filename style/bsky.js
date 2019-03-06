@@ -1,7 +1,7 @@
 function DemoScene(DemoCamera,DCU) {
     //////////////////^/\/\¯\¯\--.
     // call AFTER initiating 3js | allocates memory! | Starts running the demonstration
-        
+
         var DemoScene = new THREE.Scene();
         var DemoSphereMemory = [];
         var DemoSphereGroup = new THREE.Object3D();
@@ -96,7 +96,7 @@ function DemoScene(DemoCamera,DCU) {
         DemoSphereGroup.position.x = DemoRadius*step;
     };
 
-    
+
     var N = Math.sqrt(TotalSpheres);
     var S3Done = false;
     var DemoSphereGroupSMem = [];
@@ -124,7 +124,7 @@ function DemoScene(DemoCamera,DCU) {
         };
 
         step = (elapsedTime-6)/2;
-        
+
         for(i=0; i<N; i++)
         {
             DemoSphereGroupSMem[i].rotation.z = i*step;
@@ -177,7 +177,7 @@ function DemoScene(DemoCamera,DCU) {
 
 
 
-    
+
 
 
 
@@ -190,9 +190,9 @@ function DemoScene(DemoCamera,DCU) {
 
         /*******************************DEMO
         SCENE
-        
-        
-        
+
+
+
         */
     this.RenderDemoScene = function() {
             DCU.call(DemoCamera);
@@ -212,12 +212,12 @@ function DemoScene(DemoCamera,DCU) {
         return DemoScene;
     };
        /***
-        * 
-        * 
-        * 
+        *
+        *
+        *
         * YA
-        * 
-        * 
+        *
+        *
         */
 };
 
@@ -264,7 +264,7 @@ function bsky() {
     this.bcreate = function(){
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
-        
+
 
         window.addEventListener('resize', function () {
             cube.rotation.z += 0.5;
@@ -311,6 +311,8 @@ function bsky() {
         cube.rotation.y += 0.0015;
     };
 
+    var _displaydemo = false;
+
     var render = function () {
         renderer.autoClear = true;
         camera.position.z = 0;
@@ -322,15 +324,15 @@ function bsky() {
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);
 
-
-        renderer.autoClear = false;
-        camera.fov = 90;
-        camera.position.z = 10;
-        camera.position.y = 25;
-        camera.rotation.x = -45;
-        camera.updateProjectionMatrix();
-        renderer.render(Demo.RenderDemoScene(), camera);
-
+        if(_displaydemo == true) {
+            renderer.autoClear = false;
+            camera.fov = 90;
+            camera.position.z = 10;
+            camera.position.y = 25;
+            camera.rotation.x = -45;
+            camera.updateProjectionMatrix();
+            renderer.render(Demo.RenderDemoScene(), camera);
+        };
 
     };
 
