@@ -4,12 +4,12 @@ function BaseWidget(nname, nruler) {
     var _Lruleroffset = 0;
 
 
-    //Define how far to the right you want the logo
+    //Overload to define how far to the right you want the widget
     this.navleft = function() {
         return _Lruleroffset.left;
     };
 
-    //define how far down you want the logo
+    //Overload to define how far down you want the widget
     this.navtop = function() {
         return 300;
     };

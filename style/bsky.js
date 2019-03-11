@@ -16,6 +16,7 @@ function DemoScene(DemoCamera,DCU) {
         var step = 0;
         var i = 0;
 
+
     this.InitiateDemo = function() {
                 DemoLights[ 0 ] = new THREE.PointLight( 0xffffff, 2, 0 );
                 DemoLights[ 1 ] = new THREE.PointLight( 0xffffff, 2, 0 );
@@ -59,7 +60,9 @@ function DemoScene(DemoCamera,DCU) {
             DemoSphereGroupController.add(DemoSphereGroup);
             DemoScene.add( DemoSphereGroupController );
             setInterval(function () {
-                elapsedTime+=0.1;
+                if(($(":root").css("--runDemo")=="1px")){
+                    elapsedTime+=0.1;
+                }
             }, 100);
     };
 
@@ -165,11 +168,13 @@ function DemoScene(DemoCamera,DCU) {
     };
 
     this.FinalStage = function() {
-        for(i=0;i<N;i++){
-            DemoSphereGroupSMem[i].rotation.z+=1;
+        if(($(":root").css("--runDemo")=="1px")){
+            for(i=0;i<N;i++){
+                DemoSphereGroupSMem[i].rotation.z+=1;
+            }
+            DemoCamera.fov=45;
+            DemoCamera.updateProjectionMatrix();
         }
-        DemoCamera.fov=45;
-        DemoCamera.updateProjectionMatrix();
     };
 
 
@@ -233,6 +238,8 @@ function bsky() {
     CamControl.maxDistance = 30;
     CamControl.minPolarAngle = Math.PI;
     CamControl.screenSpacePanning = true;
+
+
     var Demo = new DemoScene(camera,CamControl.update);
 
     var geometry = new THREE.CubeGeometry(3000, 3000, 3000);
@@ -311,7 +318,6 @@ function bsky() {
         cube.rotation.y += 0.0015;
     };
 
-    var _displaydemo = false;
 
     var render = function () {
         renderer.autoClear = true;
@@ -323,8 +329,7 @@ function bsky() {
         camera.fov = 150;
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);
-
-        if(_displaydemo == true) {
+        if($(":root").css("--runDemo")=="1px" || ($(":root").css("--runDemo")=="2px")) {
             renderer.autoClear = false;
             camera.fov = 90;
             camera.position.z = 10;

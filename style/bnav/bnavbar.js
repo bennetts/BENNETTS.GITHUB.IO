@@ -1,19 +1,49 @@
-function Button(name, index) {
+function Button(name, index, _clickedOn = function(){}, _clickedOff = function(){}, _clickedAgain = function(){}) {
     var _name = name;
     var _index = index;
+    var aclickedOn = _clickedOn;
+    var aclickedOff = _clickedOff;
+    var aclickedAgain = _clickedAgain;
+    var clicked = false;
+    var clickedAgainSwitch = false;
 
 	  this.draw = function(hpos) {
 			if(_index===hpos){
 				$(_name).css({backgroundPosition:'0px -10px'});
 		  } else {
-				$(_name).css({backgroundPosition:'-64px -10px'});
-		  }
+				  $(_name).css({backgroundPosition:'-64px -10px'});
+		    }
     };
 
     this.update = function(x,y, spacing) {
         $(_name).css({top:y});
 				$(_name).css({left:(x+(spacing*(_index)))});
     };
+
+    this.clickedOff = function() {
+      if(clicked === true){
+        clicked = false;
+        aclickedOff.call();
+      }
+    };
+
+    this.clickedOn = function() {
+      if(clicked===false){
+        clicked = true;
+        aclickedOn.call();
+      }
+    };
+
+    this.clickedAgain = function() {
+      if(clickedAgainSwitch==false){
+      aclickedAgain.call();
+      clickedAgainSwitch = true;
+    } else {
+      aclickedOn.call();
+      clickedAgainSwitch = false;
+    }
+    };
+
 };
 
 
@@ -77,8 +107,8 @@ function Navbar(nname, ntrack, nruler, nright) {
 		}
 	};
 
-	this._addbutton = function(bname) {
-		_index.push(new Button(bname, _length));
+	this._addbutton = function(bname,clickedOnFunction,clickedOffFunction,clickedAgainFunction) {
+		_index.push(new Button(bname, _length, clickedOnFunction, clickedOffFunction,clickedAgainFunction));
 		_length+=1;
 	};
 
@@ -132,11 +162,21 @@ function Navbar(nname, ntrack, nruler, nright) {
 
   };
 
+  var SelectionBuffer = _curselect;
+
   this._click = function(e) {
       if(e.pageX>=(this._findcenterleft()) && e.pageX<(this._findcenterleft()+(_buttonspacing*(_length+1))) && e.pageY<(_nheight+_top) && e.pageY>_top)
       {
         _curselect = Math.floor((e.pageX-this._findcenterleft())/_buttonspacing);
         if(_curselect>_length){_curselect=_length;}
+
+        if(SelectionBuffer!=_curselect){
+          _index[SelectionBuffer].clickedOff();
+          _index[_curselect].clickedOn();
+        } else if(SelectionBuffer==_curselect) {
+          _index[_curselect].clickedAgain();
+        }
+        SelectionBuffer = _curselect;
       }
   };
 };

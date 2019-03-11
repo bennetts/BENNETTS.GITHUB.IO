@@ -1,13 +1,26 @@
+var barcher = new Barchitect("#rule");
+var sky = new bsky();
+
+	var DemoButtonClickedOn = function() {
+		$(":root").css({"--runDemo": 1});
+	};
+
+	var DemoButtonClickedAgain = function() {
+		$(":root").css({"--runDemo": 2});
+	};
+
+	var DemoButtonClickedOff = function() {
+		$(":root").css({"--runDemo": 0});
+	};
+
 var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule", "#wsright");
 	bnavbar._addbutton("#wsbhome");
 	bnavbar._addbutton("#wsbwad");
 	bnavbar._addbutton("#wsbghub");
-	bnavbar._addbutton("#wsbdemo");
+	bnavbar._addbutton("#wsbdemo", DemoButtonClickedOn,DemoButtonClickedOff,DemoButtonClickedAgain);
 
 var blogo = new BaseWidget("#blogo", "#rule");
 var babout = new BaseWidget("#wsfoot", "#rule");
-
-//DELET
 var bDEMOCOVER = new BaseWidget("#democover", "#rule");
 
 blogo.navtop = function() {
@@ -23,14 +36,11 @@ bDEMOCOVER.navtop = function() {
 };
 
 
-var barcher = new Barchitect("#rule");
-
 barcher.addWidget(blogo, blogo._click, blogo._update);
 barcher.addWidget(bnavbar, bnavbar._click, bnavbar._update);
 barcher.addWidget(babout, babout._click, babout._update);
 barcher.addWidget(bDEMOCOVER, bDEMOCOVER._click, bDEMOCOVER._update);
 
-var sky = new bsky();
 
 /*88888888888888888888888888888*/
 
