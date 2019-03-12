@@ -284,7 +284,6 @@ function bsky() {
 
         CamControl.autoRotate = true;
         scene.add(cube);
-        Demo.InitiateDemo();
 
     };
 
@@ -314,7 +313,12 @@ function bsky() {
       camera.updateProjectionMatrix();*/
     };
 
+    var demoInitiate = 1;
     var update = function () {
+        if($(":root").css("--runDemo")=="1px" && demoInitiate){
+            Demo.InitiateDemo();
+            demoInitiate = 0;
+        }
         cube.rotation.y += 0.0015;
     };
 
