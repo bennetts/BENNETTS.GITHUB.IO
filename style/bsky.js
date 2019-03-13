@@ -1,7 +1,5 @@
 function DemoScene(DemoCamera,DCU) {
-    //////////////////^/\/\¯\¯\--.
-    // call AFTER initiating 3js | allocates memory! | Starts running the demonstration
-
+    
         var DemoScene = new THREE.Scene();
         var DemoSphereMemory = [];
         var DemoSphereGroup = new THREE.Object3D();
@@ -16,7 +14,8 @@ function DemoScene(DemoCamera,DCU) {
         var step = 0;
         var i = 0;
 
-
+    //////////////////^/\/\¯\¯\--.
+    // call AFTER initiating 3js | allocates memory! | Starts running the demonstration
     this.InitiateDemo = function() {
                 DemoLights[ 0 ] = new THREE.PointLight( 0xffffff, 2, 0 );
                 DemoLights[ 1 ] = new THREE.PointLight( 0xffffff, 2, 0 );
@@ -232,12 +231,12 @@ function bsky() {
     var renderer = new THREE.WebGLRenderer();
 
     var CamControl = new THREE.OrbitControls(camera,renderer.domElement);
-    CamControl.enabled=false;
-    CamControl.enableZoom=false;
-    CamControl.autoRotateSpeed = 20;
-    CamControl.maxDistance = 30;
-    CamControl.minPolarAngle = Math.PI;
-    CamControl.screenSpacePanning = true;
+        CamControl.enabled=false;
+        CamControl.enableZoom=false;
+        CamControl.autoRotateSpeed = 20;
+        CamControl.maxDistance = 30;
+        CamControl.minPolarAngle = Math.PI;
+        CamControl.screenSpacePanning = true;
 
 
     var Demo = new DemoScene(camera,CamControl.update);

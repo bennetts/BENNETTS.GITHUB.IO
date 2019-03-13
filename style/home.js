@@ -14,10 +14,10 @@ var sky = new bsky();
 	};
 
 var bnavbar = new Navbar("#wsbnav", "#wsselb", "#rule", "#wsright");
-	bnavbar._addbutton("#wsbhome");
-	bnavbar._addbutton("#wsbwad");
-	bnavbar._addbutton("#wsbghub");
-	bnavbar._addbutton("#wsbdemo", DemoButtonClickedOn,DemoButtonClickedOff,DemoButtonClickedAgain);
+		bnavbar._addbutton("#wsbhome");
+		bnavbar._addbutton("#wsbwad");
+		bnavbar._addbutton("#wsbghub");
+		bnavbar._addbutton("#wsbdemo", DemoButtonClickedOn,DemoButtonClickedOff,DemoButtonClickedAgain);
 
 var blogo = new BaseWidget("#blogo", "#rule");
 var babout = new BaseWidget("#wsfoot", "#rule");
