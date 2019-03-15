@@ -1,5 +1,5 @@
 function DemoScene(DemoCamera,DCU) {
-    
+
         var DemoScene = new THREE.Scene();
         var DemoSphereMemory = [];
         var DemoSphereGroup = new THREE.Object3D();
@@ -166,10 +166,25 @@ function DemoScene(DemoCamera,DCU) {
         S7Done=true;
     };
 
+
+    var forModulationI = 0;
+    var forModulationJ = 1;
+    var forModulationK = 0;
     this.FinalStage = function() {
         if(($(":root").css("--runDemo")=="1px")){
             for(i=0;i<N;i++){
                 DemoSphereGroupSMem[i].rotation.z+=1;
+                if(forModulationI<TotalSpheres){
+                    if(forModulationK==0)
+                    {
+                        forModulationJ=1;
+                    }
+                }else {
+                    forModulationJ*=-1;
+                    forModulationK=1;
+                    if(forModulationI==0){forModulationK=0;}
+                } forModulationI+=forModulationJ;
+                    DemoSphereGroupSMem[i].rotation.y+=0.01*forModulationJ;
             }
             DemoCamera.fov=45;
             DemoCamera.updateProjectionMatrix();

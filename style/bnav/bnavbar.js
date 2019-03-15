@@ -4,7 +4,7 @@ function Button(name, index, _clickedOn = function(){}, _clickedOff = function()
     var aclickedOn = _clickedOn;
     var aclickedOff = _clickedOff;
     var aclickedAgain = _clickedAgain;
-    var clicked = false;
+    var clicked = true;
     var clickedAgainSwitch = false;
 
 	  this.draw = function(hpos) {
@@ -108,7 +108,7 @@ function Navbar(nname, ntrack, nruler, nright) {
 	};
 
 	this._addbutton = function(bname,clickedOnFunction,clickedOffFunction,clickedAgainFunction) {
-		_index.push(new Button(bname, _length, clickedOnFunction, clickedOffFunction,clickedAgainFunction));
+    _index.push(new Button(bname, _length, clickedOnFunction, clickedOffFunction,clickedAgainFunction));
 		_length+=1;
 	};
 
@@ -133,7 +133,13 @@ function Navbar(nname, ntrack, nruler, nright) {
   };
 
 
-
+  this.Ready = function(){
+		for(var i = 0; i<_length; i++) {
+      if(_curselect!=i){
+        _index[i].clickedOff();
+      }
+		}
+  };
 
 
   //Run this every time the page updates
