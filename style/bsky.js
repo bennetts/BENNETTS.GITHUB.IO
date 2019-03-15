@@ -4,6 +4,8 @@ function DemoScene(DemoCamera,DCU) {
         var DemoSphereMemory = [];
         var DemoSphereGroup = new THREE.Object3D();
         var DemoSphereGroupController = new THREE.Object3D();
+        var DemoLightGroup = new THREE.Object3D();
+        var DemoLightGroupController = new THREE.Object3D();
         var DemoLights = [];
         var elapsedTime = 0;
         var TotalSpheres = 1024;
@@ -17,17 +19,34 @@ function DemoScene(DemoCamera,DCU) {
     //////////////////^/\/\¯\¯\--.
     // call AFTER initiating 3js | allocates memory! | Starts running the demonstration
     this.InitiateDemo = function() {
-                DemoLights[ 0 ] = new THREE.PointLight( 0xffffff, 2, 0 );
-                DemoLights[ 1 ] = new THREE.PointLight( 0xffffff, 2, 0 );
-                DemoLights[ 2 ] = new THREE.PointLight( 0xffffff, 2, 0 );
+            var CoreGeometry = new THREE.SphereGeometry(1, 32, 32);
+            var CoreMaterial = new THREE.MeshLambertMaterial( {color: 0x2194CE } );
+            var CoreMesh = new THREE.Mesh( CoreGeometry, CoreMaterial );
 
-                DemoLights[ 0 ].position.set( 0, 200, 0 );
-                DemoLights[ 1 ].position.set( 100, 200, 100 );
-                DemoLights[ 2 ].position.set( - 100, - 200, - 100 );
+            DemoScene.add( CoreMesh );
 
-                DemoScene.add( DemoLights[ 0 ] );
-                DemoScene.add( DemoLights[ 1 ] );
-                DemoScene.add( DemoLights[ 2 ] );
+                DemoLights[ 0 ] = new THREE.PointLight( 0x00ff00, 1, 0  );
+                DemoLights[ 1 ] = new THREE.PointLight( 0x00ff00, 3, 0  );
+                DemoLights[ 2 ] = new THREE.PointLight( 0x0000ff, 3, 0  );
+                DemoLights[ 3 ] = new THREE.PointLight( 0xffffff, 2, 0 );
+                DemoLights[ 4 ] = new THREE.PointLight( 0xffffff, 2, 0 );
+                DemoLights[ 5 ] = new THREE.PointLight( 0xffffff, 2, 0 );
+
+                DemoLights[ 0 ].position.set( 3, 5, 3 );
+                DemoLights[ 1 ].position.set( 4, 4, 0 );
+                DemoLights[ 2 ].position.set( 0, 3, 6 );
+                DemoLights[ 3 ].position.set( 0, 200, 0 );
+                DemoLights[ 4 ].position.set( 100, 200, 100 );
+                DemoLights[ 5 ].position.set( - 100, - 200, - 100 );
+
+                DemoLightGroup.add(DemoLights[0]);
+                DemoLightGroup.add(DemoLights[3]);
+                DemoLightGroup.add(DemoLights[4]);
+                DemoLightGroup.add(DemoLights[5]);
+
+                DemoLightGroupController.add(DemoLightGroup);
+
+                DemoScene.add( DemoLightGroupController );
 
 
                 var startColor = 0x320F43;
@@ -149,17 +168,17 @@ function DemoScene(DemoCamera,DCU) {
             if(step2<1){
                 FSA = 45*step2;
             };
-            DemoCamera.fov=90-FSA;
+            DemoCamera.fov=105-FSA;
             DemoCamera.updateProjectionMatrix();
     };
 
     this.StageSix = function() {
-        DemoCamera.fov=45;
+        DemoCamera.fov=60;
         DemoCamera.updateProjectionMatrix();
     };
 
     this.StageSeven = function() {
-        DemoCamera.fov=45;
+        DemoCamera.fov=60;
         DemoCamera.updateProjectionMatrix();
         if(S7Done==false){
         };
@@ -173,8 +192,8 @@ function DemoScene(DemoCamera,DCU) {
     this.FinalStage = function() {
         if(($(":root").css("--runDemo")=="1px")){
             for(i=0;i<N;i++){
-                DemoSphereGroupSMem[i].rotation.z+=1;
-                if(forModulationI<TotalSpheres){
+                DemoSphereGroupSMem[i].rotation.z+=.01;
+                if(forModulationI<TotalSpheres || forModulationI>TotalSpheres*-1){
                     if(forModulationK==0)
                     {
                         forModulationJ=1;
@@ -184,9 +203,10 @@ function DemoScene(DemoCamera,DCU) {
                     forModulationK=1;
                     if(forModulationI==0){forModulationK=0;}
                 } forModulationI+=forModulationJ;
-                    DemoSphereGroupSMem[i].rotation.y+=0.01*forModulationJ;
+                    DemoSphereGroupSMem[i].rotation.x+=0.001*forModulationJ;
+                    DemoSphereGroupSMem[i].rotation.y+=0.0001*i;
             }
-            DemoCamera.fov=45;
+            DemoCamera.fov=60;
             DemoCamera.updateProjectionMatrix();
         }
     };
@@ -215,7 +235,6 @@ function DemoScene(DemoCamera,DCU) {
         */
     this.RenderDemoScene = function() {
             DCU.call(DemoCamera);
-
             if(elapsedTime < 3){
                 this.StageOne();
             }else if(elapsedTime <= 6){
