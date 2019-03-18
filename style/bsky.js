@@ -351,6 +351,9 @@ function bsky() {
         if($(":root").css("--runDemo")=="1px" && demoInitiate){
             Demo.InitiateDemo();
             demoInitiate = 0;
+        } else if($(":root").css("--runDemo")=="2px" && demoInitiate) {
+
+            CamControl.enabled=true;
         }
         cube.rotation.y += 0.0015;
     };
@@ -362,7 +365,7 @@ function bsky() {
         camera.position.y = 0;
         camera.rotation.x = 0;
         camera.rotation.y = 0;
-        camera.rotation.z = 0;
+        camera.rotation.z = 0;  
         camera.fov = 150;
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);
